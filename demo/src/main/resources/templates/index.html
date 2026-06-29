@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Banking App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="container">
+
+
+
+
+
+
+    <h1>Simple Banking System</h1>
+    <form id="accountForm">
+      <label>Owner Name:</label>
+      <input
+        type="text"
+        id="ownerName"
+        class="form-control"
+        placeholder="Enter owner name"
+      />
+      <br /><br />
+      <label>Initial Balance:</label>
+      <input
+        type="number"
+        id="balance"
+        class="form-control"
+        placeholder="Enter balance"
+      />
+      <br /><br />
+      <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+
+    <hr />
+
+    <h2>Accounts List</h2>
+
+    <table border="1" width="50%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Owner Name</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody id="accountTable"></tbody>
+    </table>
+
+    <script>
+      const apiUrl = "http://localhost:8080/api/accounts";
+
+      // Load accounts from backend
+      async function loadAccounts() {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+
+        const table = document.getElementById("accountTable");
+        table.innerHTML = "";
+
+        data.forEach((acc) => {
+          table.innerHTML += `
+            <tr>
+              <td>${acc.id}</td>
+              <td>${acc.ownerName}</td>
+              <td>${acc.balance}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Create account
+      document
+        .getElementById("accountForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const account = {
+            ownerName: document.getElementById("ownerName").value,
+            balance: document.getElementById("balance").value,
+          };
+
+          await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(account),
+          });
+
+          alert("Account Created!");
+
+          // reload table after insert
+          loadAccounts();
+        });
+
+      // initial load
+      loadAccounts();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
