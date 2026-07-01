@@ -1,7 +1,8 @@
 package com.somveha.spring_bandend.dto.pagination;
 
+import lombok.Builder;
 import lombok.Data;
-
+@Builder
 @Data
 public class PaginationPage {
     private int pageSize;

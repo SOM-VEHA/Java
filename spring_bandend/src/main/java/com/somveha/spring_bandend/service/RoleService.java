@@ -2,19 +2,23 @@ package com.somveha.spring_bandend.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.dto.response.RoleResponce;
 
 public interface RoleService {
-    public List<RoleResponce> getAll();
+    List<RoleResponce> getAll();
 
-    public List<RoleResponce> FindByName(String name);
+    RoleResponce getById(Long Id);
 
-    public RoleResponce getById(Long Id);
+    RoleResponce create(RoleRequest roleRequest);
 
-    public RoleResponce create(RoleRequest roleRequest);
+    RoleResponce update(RoleRequest roleRequest, Long Id);
 
-    public RoleResponce update(RoleRequest roleRequest, Long Id);
+    void delete(Long Id);
 
-    public void delete(Long Id);
+    List<RoleResponce> FindByName(String name);
+
+    Page<RoleResponce> getAllPagination(int page,int size);
 }

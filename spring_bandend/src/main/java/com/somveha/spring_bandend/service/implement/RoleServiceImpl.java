@@ -1,5 +1,9 @@
 package com.somveha.spring_bandend.service.implement;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.somveha.spring_bandend.dto.request.RoleRequest;
@@ -59,4 +63,12 @@ public class RoleServiceImpl implements RoleService {
         return responces;
     }
 
+    @Override
+    public Page<RoleResponce> getAllPagination(int page, int size) {
+        size=Math.min(size,100);
+        Pageable pageable =PageRequest.of(page, size);
+        Page<Role> role=roleRepository.findAll(pageable);
+        Page<RoleResponce> response=role.map(roleMapper::toResponse);
+        return response;
+    }
 }
