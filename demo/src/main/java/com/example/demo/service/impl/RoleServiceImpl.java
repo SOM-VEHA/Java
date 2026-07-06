@@ -8,9 +8,10 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.service.RoleService;
 
 import lombok.RequiredArgsConstructor;
-import com.example.demo.domain.Role;
-import com.example.demo.dto.request.RoleRequest.RoleRequest;
-import com.example.demo.dto.response.RoleResponce.RoleResponse;
+
+import com.example.demo.dto.request.RoleRequest;
+import com.example.demo.dto.response.RoleResponse;
+import com.example.demo.entity.Role;
 
 import java.util.List;
 

@@ -3,9 +3,9 @@ package com.example.demo.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.example.demo.domain.SubCategory;
 import com.example.demo.dto.request.SubCategoryRequest;
 import com.example.demo.dto.response.SubCategoryResponse;
+import com.example.demo.entity.SubCategory;
 @Mapper(componentModel = "spring")
 public interface SubCategoryMapper {
     @Mapping(source = "category.id", target = "categoryId")

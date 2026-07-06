@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Banner;
 import com.example.demo.dto.response.BannerMapper;
 import com.example.demo.dto.response.BannerResponse;
+import com.example.demo.entity.Banner;
 import com.example.demo.repository.BannerRepository;
 import com.example.demo.service.BannerService;
 import lombok.RequiredArgsConstructor;

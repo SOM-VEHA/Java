@@ -1,4 +1,4 @@
-package com.example.demo.dto.response.RoleResponce;
+package com.example.demo.dto.response;
 import lombok.Data;
 @Data
 public class ApiResponse<T> {

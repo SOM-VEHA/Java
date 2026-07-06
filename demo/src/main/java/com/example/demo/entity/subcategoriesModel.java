@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.entity;
 // @table(name = "subcategories")
 public class subcategoriesModel {
     private int id;

@@ -2,9 +2,10 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.example.demo.domain.Product;
+
 import com.example.demo.dto.request.ProductRequest;
 import com.example.demo.dto.response.ProductResponce;
+import com.example.demo.entity.Product;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponce update(ProductRequest productRequest, long id) {
+    public ProductResponce update(ProductRequest productRequest, Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
         Product savedProduct = productRepository.save(product);
         productMapper.updateProductFromRequest(productRequest, product);

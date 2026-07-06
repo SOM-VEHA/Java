@@ -1,8 +1,9 @@
 package com.example.demo.service.impl;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.example.demo.domain.SubCategory;
+
 import com.example.demo.dto.response.SubCategoryResponse;
+import com.example.demo.entity.SubCategory;
 import com.example.demo.mapper.SubCategoryMapper;
 import com.example.demo.repository.SubCategoryRepository;
 import com.example.demo.service.SubcategoryService;

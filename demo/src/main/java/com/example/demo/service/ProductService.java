@@ -8,6 +8,6 @@ public interface ProductService {
     List<ProductResponce> getAll();
     ProductResponce getByid(Long id);
     ProductResponce create (ProductRequest productRequest);    
-    ProductResponce update(ProductRequest productRequest,long id);
+    ProductResponce update(ProductRequest productRequest,Long id);
     void delete(Long id);
 }

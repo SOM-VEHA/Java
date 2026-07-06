@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.request.RoleRequest.RoleRequest;
-import com.example.demo.dto.response.RoleResponce.RoleResponse;
+import com.example.demo.dto.request.RoleRequest;
+import com.example.demo.dto.response.RoleResponse;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;

@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
-import com.example.demo.dto.request.RoleRequest.RoleRequest;
-import com.example.demo.dto.response.RoleResponce.ApiResponse;
-import com.example.demo.dto.response.RoleResponce.RoleResponse;
+
+import com.example.demo.dto.request.RoleRequest;
+import com.example.demo.dto.response.ApiResponse;
+import com.example.demo.dto.response.RoleResponse;
 import com.example.demo.service.RoleService;
 
 import lombok.RequiredArgsConstructor;

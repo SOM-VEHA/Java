@@ -4,9 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import com.example.demo.domain.Product;
 import com.example.demo.dto.request.ProductRequest;
 import com.example.demo.dto.response.ProductResponce;
+import com.example.demo.entity.Product;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

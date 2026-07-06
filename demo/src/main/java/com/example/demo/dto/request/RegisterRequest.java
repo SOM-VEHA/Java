@@ -1,4 +1,4 @@
-package com.example.demo.dto.request.UserRequest;
+package com.example.demo.dto.request;
 import lombok.Data;
 @Data
 public class RegisterRequest {
