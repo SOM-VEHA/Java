@@ -5,20 +5,21 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.somveha.spring_bandend.dto.request.RoleRequest;
-import com.somveha.spring_bandend.dto.response.RoleResponce;
+import com.somveha.spring_bandend.dto.response.RoleResponse;
 
 public interface RoleService {
-    List<RoleResponce> getAll();
+    
+    List<RoleResponse> getAll();
 
-    RoleResponce getById(Long Id);
+    RoleResponse getById(Long Id);
 
-    RoleResponce create(RoleRequest roleRequest);
+    RoleResponse create(RoleRequest roleRequest);
 
-    RoleResponce update(RoleRequest roleRequest, Long Id);
+    RoleResponse update(RoleRequest roleRequest, Long Id);
 
     void delete(Long Id);
 
-    List<RoleResponce> FindByName(String name);
+    List<RoleResponse> FindByName(String name);
 
-    Page<RoleResponce> getAllPagination(int page,int size);
+    Page<RoleResponse> getAllPagination(int page,int size);
 }

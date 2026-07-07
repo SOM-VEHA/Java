@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Data
 @JsonPropertyOrder({ "id", "name", "description" })
-public class RoleResponce {
+public class RoleResponse {
     private Long id;
     private String name;
     private String description;

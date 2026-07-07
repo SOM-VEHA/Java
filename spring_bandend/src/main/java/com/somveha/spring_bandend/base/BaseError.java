@@ -1,13 +1,10 @@
-package com.somveha.spring_bandend.dto;
-import com.fasterxml.jackson.annotation.JsonInclude;
+package com.somveha.spring_bandend.base;
+
 import com.somveha.spring_bandend.dto.pagination.PaginationPage;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 @Data
-// @Builder
-@AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiResponse<T> {
+public class BaseError<T> {
     private boolean status;
     private int code;
     private String message;

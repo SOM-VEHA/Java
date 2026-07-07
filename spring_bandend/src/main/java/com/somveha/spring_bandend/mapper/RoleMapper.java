@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.somveha.spring_bandend.dto.request.RoleRequest;
-import com.somveha.spring_bandend.dto.response.RoleResponce;
+import com.somveha.spring_bandend.dto.response.RoleResponse;
 import com.somveha.spring_bandend.entity.Role;
 
 @Mapper(componentModel = "spring")
@@ -14,5 +14,5 @@ public interface RoleMapper {
 
     public Role toEntity(RoleRequest request);
 
-    public RoleResponce toResponse(Role role);
+    public RoleResponse toResponse(Role role);
 }
