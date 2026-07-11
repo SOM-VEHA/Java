@@ -1,6 +1,7 @@
 package com.somveha.spring_bandend.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 
@@ -19,7 +20,7 @@ public interface RoleService {
 
     void delete(Long Id);
 
-    List<RoleResponse> FindByName(String name);
+    List<RoleResponse> findByName(Map<String, String> params);
 
     Page<RoleResponse> getAllPagination(int page,int size);
 }

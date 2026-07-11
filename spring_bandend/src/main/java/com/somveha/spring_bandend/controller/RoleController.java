@@ -21,14 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/role")
+@RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     @PostMapping
     public ResponseEntity<BaseSucess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
         RoleResponse roleResponse = roleService.create(roleRequest);
@@ -90,12 +87,12 @@ public class RoleController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete role");
         }
+
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(@RequestParam Map<String, String> params) {
-        String name = params.get("name");
-        List<RoleResponse> roles = roleService.FindByName(name);
+    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params){
+        List<RoleResponse> roles = roleService.findByName(params);
         BaseSucess<List<RoleResponse>> response = BaseSucess.<List<RoleResponse>>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
@@ -103,6 +100,6 @@ public class RoleController {
                 .message("Success")
                 .data(roles)
                 .build();
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.ok(response);
     }
 }
