@@ -1,0 +1,20 @@
+import 'dart:async';
+
+import 'package:e_learning/model/Banner.dart';
+import 'package:e_learning/repository/BannerRepository.dart';
+import 'package:e_learning/repository/impl/BannerRepositoryImpl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class BannerController extends AsyncNotifier<List<Banner>> {
+  late BannerRepository bannerRepository;
+  @override
+  Future<List<Banner>> build()async {
+    bannerRepository = ref.read(bannerRepositoryProvider);
+    return bannerRepository.findAll();
+  }
+
+  Future<void> reload() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => bannerRepository.findAll());
+  }
+}
