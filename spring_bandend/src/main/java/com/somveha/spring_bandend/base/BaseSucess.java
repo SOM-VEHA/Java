@@ -1,14 +1,15 @@
 package com.somveha.spring_bandend.base;
-import com.somveha.spring_bandend.dto.pagination.PaginationPage;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
-// @Builder
+@Builder
 @Data
 public class BaseSucess<T> {
     private boolean status;
     private int code;
     private String message;
-    private String timestamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime timestamp;
     private T data;
-    private PaginationPage pagination;
 }

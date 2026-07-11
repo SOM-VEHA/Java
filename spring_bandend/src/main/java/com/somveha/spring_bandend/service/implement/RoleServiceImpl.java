@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.dto.response.RoleResponse;
 import com.somveha.spring_bandend.entity.Role;
+import com.somveha.spring_bandend.exception.ResourceNotFoundException;
 import com.somveha.spring_bandend.mapper.RoleMapper;
 import com.somveha.spring_bandend.repository.RoleRepository;
 import com.somveha.spring_bandend.service.RoleService;
@@ -26,10 +27,9 @@ public class RoleServiceImpl implements RoleService {
         return responces;
     }
 
-    public RoleResponse getById(Long Id) {
-        Role role = roleRepository.findById(Id).orElseThrow(() -> new RuntimeException("Role not found with id: " + Id));
-        RoleResponse responce= roleMapper.toResponse(role);
-        return responce;
+    public RoleResponse getById(Long id) {
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        return roleMapper.toResponse(role);
     }
 
     @Override
@@ -41,18 +41,16 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleResponse update(RoleRequest roleRequest, Long Id) {
-        Role role = roleRepository.findById(Id).orElseThrow(() -> new RuntimeException("Role not found with id: " + Id));
-        role.setName(roleRequest.getName());
-        role.setDescription(roleRequest.getDescription());
-        Role updatedRole = roleRepository.save(role);
-        RoleResponse responce=roleMapper.toResponse(updatedRole);
-        return responce;
+    public RoleResponse update(RoleRequest request, Long id) {
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        role.setName(request.getName());
+        role.setDescription(request.getDescription());
+        return roleMapper.toResponse(roleRepository.save(role));
     }
 
     @Override
-    public void delete(Long Id) {
-        Role role = roleRepository.findById(Id).orElseThrow(() -> new RuntimeException("Role not found with id: " + Id));
+    public void delete(Long id) {
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         roleRepository.delete(role);
     }
 
