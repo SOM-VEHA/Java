@@ -14,9 +14,6 @@ import com.somveha.spring_bandend.mapper.RoleMapper;
 import com.somveha.spring_bandend.repository.RoleRepository;
 import com.somveha.spring_bandend.service.RoleService;
 import com.somveha.spring_bandend.specification.RoleSpecification;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
