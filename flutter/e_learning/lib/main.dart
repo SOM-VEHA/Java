@@ -1,5 +1,7 @@
+import 'package:e_learning/core/Supabase.dart';
 import 'package:e_learning/screens/Login.dart';
 import 'package:e_learning/screens/ProfileScreen.dart';
+import 'package:e_learning/screens/navigation/Navigation.dart';
 import 'package:e_learning/screens/splash.dart';
 import 'package:e_learning/screens/test.dart';
 import 'package:e_learning/widget/Banner.dart';
@@ -13,11 +15,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://ppfwrhhfgfprnqlgdcre.supabase.co',
-    anonKey: 'sb_publishable_NObOfc_mtZUejH0-ffPw1A_CTkOB-b9',
+    url: Supabase_test.url,
+    anonKey: Supabase_test.anonKey,
   );
-
-
 
   runApp(
     const ProviderScope(
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home:  AnimatedCourseListPage(),
+      home:Navigation(),
     );
   }
 }
