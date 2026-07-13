@@ -1,3 +1,4 @@
+import 'package:e_learning/screens/course_screen.dart';
 import 'package:e_learning/screens/favorite_screen.dart';
 import 'package:e_learning/screens/home_screen.dart';
 import 'package:e_learning/screens/profile_screen.dart';
@@ -20,10 +21,10 @@ class _NavigationState extends State<Navigation> {
 
   final pages = const [
     HomeScreen(),
-    Center(child: Text("Courses")),
-    FavoritePage(),
-    // ProfileScreens(),
+    CourseScreen(),
+    FavoriteScreen(),
     ProfileScreen(),
+    // ProfileScreens(),
   ];
 
   @override

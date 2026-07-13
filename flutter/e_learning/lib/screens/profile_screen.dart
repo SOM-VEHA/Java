@@ -1,8 +1,12 @@
+import 'package:e_learning/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../model/Achievement.dart';
 import '../model/UserProfile.dart';
+import '../provider/AuthProvider.dart';
+import '../provider/FavoriteProvider.dart';
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});
@@ -397,11 +401,12 @@ class SettingTile extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -582,8 +587,20 @@ class ProfileScreen extends StatelessWidget {
                         icon: LucideIcons.logOut,
                         title: "Sign Out",
                         sub: "Clear security credentials",
-                        // danger: true,
-                        // onTap: widget.onLogout,
+                        danger: true,
+                        onTap: ()async {
+                          await ref.read(authProvider.notifier).logout();
+                          ref.invalidate(favoriteControllerProvider);
+                          if (context.mounted) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const LoginPage(),
+                              ),
+                                  (route) => false,
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),

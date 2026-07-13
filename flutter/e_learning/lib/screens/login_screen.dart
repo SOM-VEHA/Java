@@ -1,4 +1,6 @@
+import 'package:e_learning/provider/FavoriteProvider.dart';
 import 'package:e_learning/screens/navigation/navigation_screen.dart';
+import 'package:e_learning/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,19 +23,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .login(emailController.text.trim(), passwordController.text.trim());
 
     final state = ref.read(authProvider);
-
     if (!mounted) return;
-
     state.when(
-      data: (_) {
+      data: (_)async {
+        ref.invalidate(favoriteControllerProvider);
+        await ref.read(favoriteControllerProvider.future);
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Login Successful")));
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (_) =>  Navigation(),
-          ),
+          MaterialPageRoute(builder: (_) => Navigation()),
         );
       },
 
@@ -119,12 +119,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
             TextButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (_) => const RegisterPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const RegisterPage()),
+                );
               },
-
               child: const Text("Don't have an account? Register"),
             ),
           ],

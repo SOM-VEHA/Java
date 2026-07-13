@@ -4,6 +4,7 @@ import 'package:e_learning/widget/Category.dart';
 import 'package:e_learning/widget/Course.dart';
 import 'package:flutter/material.dart';
 
+import 'course_popular_screen.dart';
 import 'search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -98,7 +99,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          CourseScreen(),
+          CoursePopular(),
         ],
       ),
     );

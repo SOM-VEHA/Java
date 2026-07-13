@@ -29,15 +29,34 @@ class SupabaseService {
     await client.from(table).update(data).eq(column, value);
   }
 
-  // Future<void> delete(String table, String column, dynamic value) async {
-  //   await client.from(table).delete().eq(column, value);
-  // }
   Future<void> delete(String table, Map<String, dynamic> filters) async {
     var query = client.from(table).delete();
     filters.forEach((column, value) {
       query = query.eq(column, value);
     });
     await query;
+  }
+  Future<AuthResponse> login({
+    required String email,
+    required String password,
+  }) async {
+    return await client.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  Future<AuthResponse> register({
+    required String email,
+    required String password,
+  }) async {
+    return await client.auth.signUp(
+      email: email,
+      password: password,
+    );
+  }
+  Future<void> logout() async {
+    await client.auth.signOut();
   }
 }
 

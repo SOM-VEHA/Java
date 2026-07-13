@@ -1,85 +1,79 @@
+import 'package:e_learning/provider/AuthProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-
+class _RegisterPageState extends ConsumerState<RegisterPage> {
+  final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  bool loading = false;
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   Future<void> register() async {
-
-    setState(() => loading = true);
-
     try {
+      await ref.read(authProvider.notifier).register(usernameController.text.trim(), emailController.text.trim(), passwordController.text.trim(),);
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Registration Successful")));
 
-      await Supabase.instance.client.auth.signUp(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Registration Successful"),
-        ),
-      );
-
-      Navigator.pop(context);
-
+      // Navigator.pop(context);
     } on AuthException catch (e) {
+      if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.message)));
+    } catch (e) {
+      if (!mounted) return;
 
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     }
-
-    setState(() => loading = false);
   }
 
   @override
   Widget build(BuildContext context) {
-
+    final authState = ref.watch(authProvider);
+    final loading = authState.isLoading;
     return Scaffold(
-
-      appBar: AppBar(
-        title: const Text("Register"),
-      ),
-
+      appBar: AppBar(title: const Text("Register")),
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
+            TextField(
+              controller: usernameController,
+              decoration: const InputDecoration(labelText: "Username"),
+            ),
+            const SizedBox(height: 15),
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(
-                labelText: "Email",
-              ),
+              decoration: const InputDecoration(labelText: "Email"),
             ),
-
             const SizedBox(height: 15),
-
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Password",
-              ),
+              decoration: const InputDecoration(labelText: "Password"),
             ),
-
             const SizedBox(height: 30),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -89,14 +83,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     : const Text("REGISTER"),
               ),
             ),
-
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: const Text("Already have an account? Login"),
-            )
-
+            ),
           ],
         ),
       ),

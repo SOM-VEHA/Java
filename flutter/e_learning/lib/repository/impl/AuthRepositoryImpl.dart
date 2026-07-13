@@ -1,12 +1,14 @@
-import 'package:e_learning/core/Supabase.dart';
-import 'package:e_learning/repository/AuthRepository.dart';
+import 'package:e_learning/core/supabase_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../AuthRepository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
+  final SupabaseService service;
+  AuthRepositoryImpl({required this.service});
   @override
   Future<void> logout() async {
-    await supabase.auth.signOut();
+    await service.logout();
   }
 
   @override
@@ -14,10 +16,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    return await supabase.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+    return await service.login(email: email, password: password);
   }
 
   @override
@@ -26,23 +25,19 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    final response = await supabase.auth.signUp(
-      email: email,
-      password: password,
-    );
-
+    final response = await service.register(email: email, password: password);
     if (response.user != null) {
-      await supabase.from('profiles').insert({
-        'id': response.user!.id,
+      await service.insert("user", {
+        'auth_id': response.user!.id,
         'username': username,
         'email': email,
       });
     }
-
     return response;
   }
 }
 
-final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => AuthRepositoryImpl(),
-);
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  final service = ref.watch(supabaseServiceProvider);
+  return AuthRepositoryImpl(service: service);
+});

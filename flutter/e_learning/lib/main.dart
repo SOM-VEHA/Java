@@ -1,4 +1,6 @@
 import 'package:e_learning/core/Supabase.dart';
+import 'package:e_learning/screens/App.dart';
+import 'package:e_learning/screens/favorite_screen.dart';
 import 'package:e_learning/screens/login_screen.dart';
 import 'package:e_learning/screens/profile_screen.dart';
 import 'package:e_learning/screens/navigation/navigation_screen.dart';
@@ -43,8 +45,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      // home:LoginPage(),
-      home: Navigation(),
+      home:App(),
+      // home: Navigation(),
     );
   }
 }

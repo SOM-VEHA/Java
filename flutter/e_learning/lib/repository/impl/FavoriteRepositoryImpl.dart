@@ -32,11 +32,15 @@ class FavoriteRepositoryImpl extends FavoriteRepository {
   }
 
   @override
+  @override
   Future<List<Favorite>> findAll() async {
+    final user = supabaseService.client.auth.currentUser;
+    print("Current user: ${user?.email}");
     final response = await supabaseService.select(
       "favorite",
-      columns: '''*,course(*)''',
+      columns: "*,course(*)",
     );
+    print("Favorites: ${response.length}");
     return response.map((e) => Favorite.fromJson(e)).toList();
   }
 }

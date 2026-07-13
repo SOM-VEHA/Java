@@ -12,6 +12,7 @@
 // }
 
 import 'package:e_learning/provider/CategoryProvider.dart';
+import 'package:e_learning/screens/course_by_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -147,21 +148,24 @@ class CategoryScreen extends ConsumerWidget {
           itemCount: courseList.length, // 6 items
           itemBuilder: (context, index) {
             final data=courseList[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 10,
-                    spreadRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(data.title,style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+            return InkWell(
+              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseByCategoryScreen())),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      spreadRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(data.title,style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+                ),
               ),
             );
           },

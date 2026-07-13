@@ -1,38 +1,16 @@
-import 'package:e_learning/screens/navigation/navigation_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/CourseProvider.dart';
-import '../screens/CourseDetailScreen.dart';
+import 'CourseDetailScreen.dart';
 
-class CourseScreens extends ConsumerWidget {
-  const CourseScreens({super.key});
+class CoursePopular extends ConsumerWidget {
+  const CoursePopular({Key? key}) : super(key: key);
 
-  @override
-  // Widget build(BuildContext context, WidgetRef ref) {
-  //   final courses=ref.watch(courseProvider);
-  //   return SliverPadding(
-  //     padding: const EdgeInsets.all(10),
-  //     sliver: SliverList.builder(itemBuilder: (context, index) {
-  //       return Container(
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //           color: Colors.red,
-  //         ),
-  //         margin: EdgeInsets.all(10),
-  //         height: 200,
-  //       );
-  //     },)
-  //   );
-  // }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courses = ref.watch(courseProvider);
-    return
-
-
-      courses.when(
+    return courses.when(
       loading: () => const SliverToBoxAdapter(
         child: Center(child: CircularProgressIndicator()),
       ),
