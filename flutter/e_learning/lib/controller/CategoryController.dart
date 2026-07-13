@@ -4,14 +4,13 @@ import '../model/Category.dart';
 import '../repository/CategoryRepository.dart';
 import '../repository/impl/CategoryRepositoryImpl.dart';
 class CategoryController extends AsyncNotifier<List<Category>> {
-  late CategoryRepository categoryRepository;
+  CategoryRepository get repository => ref.read(categoryRepositoryProvider);
   @override
   Future<List<Category>> build() async {
-    categoryRepository = ref.read(categoryRepositoryProvider);
-    return categoryRepository.findAll();
+    return repository.findAll();
   }
   Future<void> reload() async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() => categoryRepository.findAll());
+    state = await AsyncValue.guard(() => repository.findAll());
   }
 }

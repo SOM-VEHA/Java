@@ -1,198 +1,106 @@
-// import 'package:flutter/material.dart';
-// import '../model/Course.dart';
-// import 'course_detail_screen.dart';
-//
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-//
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-//
-// class _HomeScreenState extends State<HomeScreen> {
-//   String selectedCategory = 'All';
-//
-//   List<Course> get filteredCourses {
-//     if (selectedCategory == 'All') {
-//       return courses;
-//     }
-//     return courses.where((course) => course.category == selectedCategory).toList();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final categories = ['All', 'Flutter', 'Dart', 'Java', 'C#', 'PHP', 'HTML'];
-//
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Programming Courses', style: TextStyle(fontWeight: FontWeight.bold)),
-//         actions: [
-//           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-//           IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_none)),
-//         ],
-//       ),
-//       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const Text(
-//               'Welcome back, Learner!',
-//               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 8),
-//             const Text(
-//               'What do you want to learn today?',
-//               style: TextStyle(fontSize: 16, color: Colors.grey),
-//             ),
-//             const SizedBox(height: 24),
-//             const Text(
-//               'Categories',
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 16),
-//             SizedBox(
-//               height: 45,
-//               child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: categories.length,
-//                 itemBuilder: (context, index) {
-//                   final category = categories[index];
-//                   return _CategoryChip(
-//                     label: category,
-//                     isSelected: selectedCategory == category,
-//                     onSelected: (selected) {
-//                       setState(() {
-//                         selectedCategory = category;
-//                       });
-//                     },
-//                   );
-//                 },
-//               ),
-//             ),
-//             const SizedBox(height: 24),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   selectedCategory == 'All' ? 'Popular Courses' : '$selectedCategory Courses',
-//                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//                 ),
-//                 TextButton(onPressed: () {}, child: const Text('See All')),
-//               ],
-//             ),
-//             const SizedBox(height: 16),
-//             filteredCourses.isEmpty
-//                 ? const Center(
-//                     child: Padding(
-//                       padding: EdgeInsets.only(top: 40.0),
-//                       child: Text('No courses found for this category.'),
-//                     ),
-//                   )
-//                 : ListView.builder(
-//                     shrinkWrap: true,
-//                     physics: const NeverScrollableScrollPhysics(),
-//                     itemCount: filteredCourses.length,
-//                     itemBuilder: (context, index) {
-//                       final course = filteredCourses[index];
-//                       return GestureDetector(
-//                         onTap: () {
-//                           Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                               builder: (context) => CourseDetailScreen(course: course),
-//                             ),
-//                           );
-//                         },
-//                         child: Card(
-//                           margin: const EdgeInsets.only(bottom: 16),
-//                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-//                           child: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               ClipRRect(
-//                                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-//                                 child: Image.network(
-//                                   course.image,
-//                                   height: 180,
-//                                   width: double.infinity,
-//                                   fit: BoxFit.cover,
-//                                 ),
-//                               ),
-//                               Padding(
-//                                 padding: const EdgeInsets.all(16.0),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Text(
-//                                       course.title,
-//                                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                                     ),
-//                                     const SizedBox(height: 8),
-//                                     Row(
-//                                       children: [
-//                                         const Icon(Icons.person, size: 16, color: Colors.grey),
-//                                         const SizedBox(width: 4),
-//                                         Text(course.instructor, style: const TextStyle(color: Colors.grey)),
-//                                         const Spacer(),
-//                                         const Icon(Icons.star, size: 16, color: Colors.amber),
-//                                         const SizedBox(width: 4),
-//                                         Text(course.rating, style: const TextStyle(fontWeight: FontWeight.bold)),
-//                                       ],
-//                                     ),
-//                                     const SizedBox(height: 8),
-//                                     Text(
-//                                       course.price,
-//                                       style: TextStyle(
-//                                         fontSize: 18,
-//                                         fontWeight: FontWeight.bold,
-//                                         color: Theme.of(context).primaryColor,
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class _CategoryChip extends StatelessWidget {
-//   final String label;
-//   final bool isSelected;
-//   final Function(bool) onSelected;
-//
-//   const _CategoryChip({
-//     required this.label,
-//     required this.isSelected,
-//     required this.onSelected,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(right: 8),
-//       child: FilterChip(
-//         label: Text(label),
-//         selected: isSelected,
-//         onSelected: onSelected,
-//         backgroundColor: Colors.grey[200],
-//         selectedColor: Theme.of(context).primaryColor,
-//         labelStyle: TextStyle(
-//           color: isSelected ? Colors.white : Colors.black87,
-//           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-//         ),
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//         showCheckmark: false,
-//       ),
-//     );
-//   }
-// }
+import 'package:e_learning/screens/notification_screen.dart';
+import 'package:e_learning/widget/Banner.dart';
+import 'package:e_learning/widget/Category.dart';
+import 'package:e_learning/widget/Course.dart';
+import 'package:flutter/material.dart';
+
+import 'search_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            title: const Text("Programing E-Learning",),
+            centerTitle: false,
+            elevation: 0,
+            pinned: true,
+            actions: [
+              IconButton(onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationScreen())), icon: Icon(Icons.notifications)),
+            ],
+          ),
+          SliverPadding(
+            padding: EdgeInsetsGeometry.only(left: 20, right: 20, top: 10),
+            sliver: SliverToBoxAdapter(
+              child: InkWell(
+                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>Searchscreen())),
+                child: Container(
+                  padding: EdgeInsetsGeometry.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: Colors.white,
+                    // border: Border.all(color: Colors.blueGrey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        spreadRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search, color: Colors.grey),
+                      SizedBox(width: 10),
+                      Text(
+                        "Search programing language",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          BannerScreen(),
+          SliverPadding(
+            padding: EdgeInsetsGeometry.only(left: 10, right: 10, top: 10),
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                child: Text(
+                  "Explore Categories",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          CategoryScreen(),
+          SliverPadding(
+            padding: EdgeInsetsGeometry.only(left: 10, right: 10, top: 10),
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                child: Text(
+                  "Explore Categories",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          BannerScreen(),
+          SliverPadding(
+            padding: EdgeInsetsGeometry.only(left: 10, right: 10, top: 10),
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                child: Text(
+                  "Popular Course",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          CourseScreen(),
+        ],
+      ),
+    );
+  }
+}

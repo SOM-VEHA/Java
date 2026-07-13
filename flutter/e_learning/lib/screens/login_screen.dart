@@ -1,4 +1,4 @@
-
+import 'package:e_learning/screens/navigation/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,6 +29,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Login Successful")));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>  Navigation(),
+          ),
+        );
       },
 
       loading: () {},
@@ -99,12 +105,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                 child: isLoading
                     ? const SizedBox(
-                  height: 25,
+                        height: 25,
 
-                  width: 25,
+                        width: 25,
 
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
                     : const Text("LOGIN", style: TextStyle(fontSize: 16)),
               ),
             ),

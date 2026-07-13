@@ -12,6 +12,7 @@
 // }
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_learning/screens/CourseDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -516,7 +517,7 @@ class BannerScreen extends ConsumerWidget {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () {},
+                        onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseDetailScreen())),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

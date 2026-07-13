@@ -1,15 +1,16 @@
 import 'package:e_learning/core/Supabase.dart';
-import 'package:e_learning/screens/Login.dart';
-import 'package:e_learning/screens/ProfileScreen.dart';
-import 'package:e_learning/screens/navigation/Navigation.dart';
-import 'package:e_learning/screens/splash.dart';
+import 'package:e_learning/screens/login_screen.dart';
+import 'package:e_learning/screens/profile_screen.dart';
+import 'package:e_learning/screens/navigation/navigation_screen.dart';
+import 'package:e_learning/screens/splash_screen.dart';
 import 'package:e_learning/screens/test.dart';
+import 'package:e_learning/screens/youtube.dart';
 import 'package:e_learning/widget/Banner.dart';
 import 'package:e_learning/widget/Category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/home_screen.dart';
+import 'screens/home_screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home:Navigation(),
+      // home:LoginPage(),
+      home: Navigation(),
     );
   }
 }

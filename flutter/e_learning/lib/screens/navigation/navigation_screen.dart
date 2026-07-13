@@ -1,4 +1,6 @@
-import 'package:e_learning/screens/Home.dart';
+import 'package:e_learning/screens/favorite_screen.dart';
+import 'package:e_learning/screens/home_screen.dart';
+import 'package:e_learning/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/Course.dart';
@@ -19,9 +21,9 @@ class _NavigationState extends State<Navigation> {
   final pages = const [
     HomeScreen(),
     Center(child: Text("Courses")),
-    Center(child: Text("Search")),
-    Center(child: Text("Progress")),
-    Center(child: Text("Profile")),
+    FavoritePage(),
+    // ProfileScreens(),
+    ProfileScreen(),
   ];
 
   @override
@@ -57,14 +59,14 @@ class _NavigationState extends State<Navigation> {
             label: 'Courses',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_fire_department_outlined),
-            activeIcon: Icon(Icons.local_fire_department),
-            label: 'Progress',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.local_fire_department_outlined),
+          //   activeIcon: Icon(Icons.local_fire_department),
+          //   label: 'Progress',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),

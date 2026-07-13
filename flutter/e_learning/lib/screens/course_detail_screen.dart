@@ -123,3 +123,23 @@
 //     );
 //   }
 // }
+class Lesson {
+  final String title;
+  final String duration;
+
+  Lesson({
+    required this.title,
+    required this.duration,
+  });
+}
+
+
+class Course {
+  final String title;
+  final List<Lesson> lessons;
+
+  Course({
+    required this.title,
+    required this.lessons,
+  });
+}
