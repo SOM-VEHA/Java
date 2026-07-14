@@ -1,13 +1,9 @@
 package com.somveha.spring_bandend.service;
-
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.data.domain.Page;
-
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.dto.response.RoleResponse;
-
 public interface RoleService {
     
     List<RoleResponse> getAll();
@@ -22,5 +18,5 @@ public interface RoleService {
 
     List<RoleResponse> findByName(Map<String, String> params);
 
-    Page<RoleResponse> getAllPagination(int page,int size);
+    Page<RoleResponse> getAllPagination(Map<String, String> params);
 }

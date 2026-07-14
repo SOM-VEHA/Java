@@ -1,4 +1,5 @@
 package com.somveha.spring_bandend.service.implement;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import com.somveha.spring_bandend.repository.RoleRepository;
 import com.somveha.spring_bandend.service.RoleService;
 import com.somveha.spring_bandend.specification.RoleSpecification;
 import lombok.RequiredArgsConstructor;
+
 @RequiredArgsConstructor
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -24,12 +26,13 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<RoleResponse> getAll() {
         List<Role> roles = roleRepository.findAll();
-        // List<RoleResponse> responces = roles.stream().map(roleMapper::toResponse).toList();
-        return  roles.stream().map(roleMapper::toResponse).toList();
+        return roles.stream().map(roleMapper::toResponse).toList();
     }
 
+    @Override
     public RoleResponse getById(Long id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         return roleMapper.toResponse(role);
     }
 
@@ -41,7 +44,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleResponse update(RoleRequest request, Long id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         role.setName(request.getName());
         role.setDescription(request.getDescription());
         return roleMapper.toResponse(roleRepository.save(role));
@@ -49,7 +53,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void delete(Long id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         roleRepository.delete(role);
     }
 
@@ -60,11 +65,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Page<RoleResponse> getAllPagination(int page, int size) {
+    public Page<RoleResponse> getAllPagination(Map<String, String> params) {
+
+        // size = Math.min(size, 100);
+        // Pageable pageable = PageRequest.of(page, size);
+        // Page<Role> role = roleRepository.findAll(pageable);
+        // Page<RoleResponse> response = role.map(roleMapper::toResponse);
+        // return response;
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("size", "10"));
         size = Math.min(size, 100);
         Pageable pageable = PageRequest.of(page, size);
-        Page<Role> role = roleRepository.findAll(pageable);
-        Page<RoleResponse> response = role.map(roleMapper::toResponse);
-        return response;
+        Page<Role> roles = roleRepository.findAll(pageable);
+        return roles.map(roleMapper::toResponse);
     }
 }

@@ -1,13 +1,18 @@
 package com.somveha.spring_bandend.controller;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.somveha.spring_bandend.base.BasePagination;
 import com.somveha.spring_bandend.base.BaseSucess;
+import com.somveha.spring_bandend.dto.pagination.PageDTO;
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.dto.response.RoleResponse;
 import com.somveha.spring_bandend.service.RoleService;
@@ -18,11 +23,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 @RestController
 @RequestMapping("/api/role")
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
+
     @PostMapping
     public ResponseEntity<BaseSucess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
         RoleResponse roleResponse = roleService.create(roleRequest);
@@ -88,7 +95,8 @@ public class RoleController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params){
+    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(
+            @RequestParam(required = false) Map<String, String> params) {
         List<RoleResponse> roles = roleService.findByName(params);
         BaseSucess<List<RoleResponse>> response = BaseSucess.<List<RoleResponse>>builder()
                 .status(true)
@@ -96,6 +104,21 @@ public class RoleController {
                 .timestamp(LocalDateTime.now())
                 .message("Success")
                 .data(roles)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("pagination")
+    public ResponseEntity<?> pagination1(@RequestParam(required = false) Map<String, String> params) {
+        Page<RoleResponse> allPagination = roleService.getAllPagination(params);
+        PageDTO pageDTO = new PageDTO(allPagination);
+        BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
+                .status(true)
+                .code(HttpStatus.OK.value())
+                .message("Success")
+                .timestamp(LocalDateTime.now().toString())
+                .pagination(pageDTO.getPagination())
+                .data(null)
                 .build();
         return ResponseEntity.ok(response);
     }
