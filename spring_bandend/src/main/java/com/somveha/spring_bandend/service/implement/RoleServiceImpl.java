@@ -12,6 +12,7 @@ import com.somveha.spring_bandend.dto.response.RoleResponse;
 import com.somveha.spring_bandend.entity.Role;
 import com.somveha.spring_bandend.exception.ResourceNotFoundException;
 import com.somveha.spring_bandend.mapper.RoleMapper;
+import com.somveha.spring_bandend.normalizer.RoleNormalizer;
 import com.somveha.spring_bandend.repository.RoleRepository;
 import com.somveha.spring_bandend.service.RoleService;
 import com.somveha.spring_bandend.specification.RoleSpecification;
@@ -22,32 +23,25 @@ import lombok.RequiredArgsConstructor;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
-
-    @Override
-    public List<RoleResponse> getAll() {
-        List<Role> roles = roleRepository.findAll();
-        return roles.stream().map(roleMapper::toResponse).toList();
-    }
+    private final RoleNormalizer roleNormalizer;
 
     @Override
     public RoleResponse getById(Long id) {
-        Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         return roleMapper.toResponse(role);
     }
 
     @Override
     public RoleResponse create(RoleRequest roleRequest) {
-        Role role = roleMapper.toEntity(roleRequest);
-        return roleMapper.toResponse(roleRepository.save(role));
+        Role entity = roleMapper.toEntity(roleNormalizer.normalize(roleRequest));
+        return roleMapper.toResponse(roleRepository.save(entity));
     }
 
     @Override
     public RoleResponse update(RoleRequest request, Long id) {
-        Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
-        role.setName(request.getName());
-        role.setDescription(request.getDescription());
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
+        role.setName(roleNormalizer.normalize(request).getName());
+        role.setDescription(roleNormalizer.normalize(request).getDescription());
         return roleMapper.toResponse(roleRepository.save(role));
     }
 

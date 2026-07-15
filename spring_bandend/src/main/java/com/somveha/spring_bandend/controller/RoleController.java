@@ -1,9 +1,7 @@
 package com.somveha.spring_bandend.controller;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 @RestController
 @RequestMapping("/api/role")
 @RequiredArgsConstructor
 public class RoleController {
+    
     private final RoleService roleService;
 
     @PostMapping
@@ -38,19 +36,6 @@ public class RoleController {
                 .code(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
                 .message("Role created successfully")
-                .data(roleResponse)
-                .build();
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping
-    public ResponseEntity<BaseSucess<List<RoleResponse>>> get() {
-        List<RoleResponse> roleResponse = roleService.getAll();
-        BaseSucess<List<RoleResponse>> response = BaseSucess.<List<RoleResponse>>builder()
-                .status(true)
-                .code(HttpStatus.OK.value())
-                .timestamp(LocalDateTime.now())
-                .message("Get all roles successfully")
                 .data(roleResponse)
                 .build();
         return ResponseEntity.ok(response);
@@ -108,7 +93,7 @@ public class RoleController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("pagination")
+    @GetMapping
     public ResponseEntity<?> pagination1(@RequestParam(required = false) Map<String, String> params) {
         Page<RoleResponse> allPagination = roleService.getAllPagination(params);
         PageDTO pageDTO = new PageDTO(allPagination);
