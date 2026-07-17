@@ -1,7 +1,7 @@
 import 'package:e_learning/model/Banner.dart';
 import 'package:e_learning/repository/BannerRepository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/supabase_client.dart';
+import '../../core/network/supabase_client.dart';
 class BannerRepositoryImpl implements BannerRepository {
   final SupabaseService service;
   BannerRepositoryImpl(this.service);

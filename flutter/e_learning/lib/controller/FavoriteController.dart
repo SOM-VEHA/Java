@@ -9,7 +9,7 @@ class FavoriteController extends AsyncNotifier<List<Favorite>> {
 
   @override
   Future<List<Favorite>> build() async {
-    ref.watch(authStateProvider);
+    // ref.watch(authStateProvider);
     return repository.findAll();
   }
 

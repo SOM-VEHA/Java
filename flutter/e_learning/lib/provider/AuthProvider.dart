@@ -1,17 +1,11 @@
+import 'package:e_learning/controller/Notifier/AuthNotifier.dart';
+import 'package:e_learning/repository/impl/AuthRepositoryImpl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:e_learning/controller/state/AuthState.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../controller/AuthController.dart';
-import '../repository/impl/AuthRepositoryImpl.dart';
-
-final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<void>>((
-  ref,
-) {
-  return AuthNotifier(ref.watch(authRepositoryProvider));
-});
-final authStateProvider = StreamProvider<User?>((ref) {
-  return Supabase.instance.client.auth.onAuthStateChange.map(
-    (event) => event.session?.user,
-  );
-});
+final authStateProvider = NotifierProvider<AuthController, FormAuthState>(AuthController.new);
+// final authNotifierProvider = StateNotifierProvider<AuthNotifier, AsyncValue<void>>((ref)=>AuthNotifier(ref.watch(authRepositoryProvider)));
+final authNotifierProvider = StateNotifierProvider<AuthNotifier,FormAuthState>((ref)=>AuthNotifier(ref.watch(authRepositoryProvider)));
+final authUserProvider = StreamProvider<User?>((ref)=>Supabase.instance.client.auth.onAuthStateChange.map((event) => event.session?.user));

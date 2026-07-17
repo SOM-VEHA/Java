@@ -1,58 +1,49 @@
-import 'package:e_learning/repository/AuthRepository.dart';
+import 'package:e_learning/controller/state/AuthState.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Authcontroller {}
-
-class AuthNotifier extends StateNotifier<AsyncValue<void>> {
-  final AuthRepository authRepository;
-  AuthNotifier(this.authRepository) : super(const AsyncData(null));
-  Future<void> login(String email, String password) async {
-    state = const AsyncLoading();
-    try {
-      final response = await authRepository.login(
-        email: email,
-        password: password,
-      );
-      print(response.user?.email);
-      state = const AsyncData(null);
-    } on AuthException catch (e) {
-      state = AsyncError(e.message, StackTrace.current);
-    } catch (e) {
-      state = AsyncError(e.toString(), StackTrace.current);
-    }
+class AuthController extends Notifier<FormAuthState> {
+  @override
+  FormAuthState build() {
+    return const FormAuthState();
   }
 
-  Future<void> register(String username, String email, String password) async {
-    print("username : $username");
-    print("email :  $email");
-    print("password : $password");
-    state = const AsyncLoading();
-    try {
-      final response = await authRepository.register(
-        username: username,
-        email: email,
-        password: password,
-      );
-      print("REGISTER SUCCESS: ${response.user?.email}");
-      state = const AsyncData(null);
-    } on AuthException catch (e, st) {
-      print("AUTH ERROR: ${e.message}");
-      state = AsyncError(e.message, st);
-    } catch (e, st) {
-      print("UNKNOWN ERROR: $e");
-      state = AsyncError(e, st);
-    }
+  /// Show / Hide Password
+  void togglePassword() {
+    state = state.copyWith(
+      obscurePassword: !state.obscurePassword,
+    );
   }
 
-  Future<void> logout() async {
-    state = const AsyncLoading();
-    try {
-      await authRepository.logout();
-      state = const AsyncData(null);
-    } catch (e) {
-      state = AsyncError(e.toString(), StackTrace.current);
-    }
+  /// Show / Hide Password //Register
+  void togglePasswordRegister() {
+    state = state.copyWith(
+      registerObscurePassword: !state.registerObscurePassword,
+    );
+  }
+
+  /// Remember Me
+  void toggleRememberMe() {
+    state = state.copyWith(
+      rememberMe: !state.rememberMe,
+    );
+  }
+
+  /// Loading UI
+  void setLoading(bool value) {
+    state = state.copyWith(
+      isLoading: value,
+    );
+  }
+
+  /// Login Status
+  void setLoggedIn(bool value) {
+    state = state.copyWith(
+      isLoggedIn: value,
+    );
+  }
+
+  /// Reset UI
+  void reset() {
+    state = const FormAuthState();
   }
 }

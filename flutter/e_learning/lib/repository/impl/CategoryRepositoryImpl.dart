@@ -1,7 +1,7 @@
 import 'package:e_learning/model/Category.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/supabase_client.dart';
+import '../../core/network/supabase_client.dart';
 import '../CategoryRepository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {

@@ -1,5 +1,6 @@
 import 'package:e_learning/core/Supabase.dart';
 import 'package:e_learning/screens/App.dart';
+import 'package:e_learning/screens/auth/LoginScreen.dart';
 import 'package:e_learning/screens/favorite_screen.dart';
 import 'package:e_learning/screens/login_screen.dart';
 import 'package:e_learning/screens/profile_screen.dart';
@@ -12,7 +13,6 @@ import 'package:e_learning/widget/Category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/home_screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home:App(),
+      home:LoginScreen(),
       // home: Navigation(),
     );
   }

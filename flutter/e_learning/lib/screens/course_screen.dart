@@ -57,7 +57,6 @@ class CourseScreen extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
-
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.symmetric(

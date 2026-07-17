@@ -1,4 +1,4 @@
-import 'package:e_learning/core/supabase_client.dart';
+import 'package:e_learning/core/network/supabase_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../AuthRepository.dart';
@@ -34,6 +34,11 @@ class AuthRepositoryImpl implements AuthRepository {
       });
     }
     return response;
+  }
+
+  @override
+  Future<void> signInWithGoogle()async {
+    await service.signInWithGoogle();
   }
 }
 

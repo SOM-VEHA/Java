@@ -1,4 +1,5 @@
-import 'package:e_learning/core/supabase_client.dart';
+import 'package:e_learning/core/exception/app_exception.dart';
+import 'package:e_learning/core/network/supabase_client.dart';
 import 'package:e_learning/model/Favorite.dart';
 import 'package:e_learning/repository/FavoriteRepository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,14 +35,20 @@ class FavoriteRepositoryImpl extends FavoriteRepository {
   @override
   @override
   Future<List<Favorite>> findAll() async {
-    final user = supabaseService.client.auth.currentUser;
-    print("Current user: ${user?.email}");
-    final response = await supabaseService.select(
-      "favorite",
-      columns: "*,course(*)",
-    );
-    print("Favorites: ${response.length}");
-    return response.map((e) => Favorite.fromJson(e)).toList();
+    try {
+      final user = supabaseService.client.auth.currentUser;
+      print("Current user: ${user?.email}");
+      final response = await supabaseService.select(
+        "favorite",
+        columns: "*,course(*)",
+      );
+      print("Favorites: ${response.length}");
+      return response.map((e) => Favorite.fromJson(e)).toList();
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: e.toString());
+    }
   }
 }
 

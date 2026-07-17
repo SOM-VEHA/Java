@@ -406,7 +406,7 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authProvider);
+    // final authState = ref.watch(authProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -589,17 +589,17 @@ class ProfileScreen extends ConsumerWidget {
                         sub: "Clear security credentials",
                         danger: true,
                         onTap: ()async {
-                          await ref.read(authProvider.notifier).logout();
-                          ref.invalidate(favoriteControllerProvider);
-                          if (context.mounted) {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const LoginPage(),
-                              ),
-                                  (route) => false,
-                            );
-                          }
+                          // await ref.read(authProvider.notifier).logout();
+                          // ref.invalidate(favoriteControllerProvider);
+                          // if (context.mounted) {
+                          //   Navigator.pushAndRemoveUntil(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (_) => const LoginPage(),
+                          //     ),
+                          //         (route) => false,
+                          //   );
+                          // }
                         },
                       ),
                     ],
