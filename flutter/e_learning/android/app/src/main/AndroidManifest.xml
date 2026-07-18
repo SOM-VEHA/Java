@@ -4,6 +4,8 @@
         android:label="e_learning"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:exported="true"
+        android:launchMode="singleTask"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

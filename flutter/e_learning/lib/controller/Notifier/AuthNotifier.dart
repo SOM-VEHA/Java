@@ -1,28 +1,35 @@
 import 'package:e_learning/controller/state/AuthState.dart';
 import 'package:e_learning/repository/AuthRepository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 class AuthNotifier extends StateNotifier<FormAuthState> {
+
   final AuthRepository authRepository;
 
   AuthNotifier(this.authRepository) : super(FormAuthState());
 
-  Future<void> login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     state = state.copyWith(isLoading: true);
     try {
       final response = await authRepository.login(
         email: email,
         password: password,
       );
-      print(response.user?.email);
+
+      if (response.user != null) {
+        return true; // login success
+      }
+      return false;
     } catch (e) {
       print(e);
+      return false;
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<void> register(String username, String email, String password) async {
+  Future<bool> register(String username, String email, String password) async {
     state = state.copyWith(isRegisterLoading: true);
     try {
       final response = await authRepository.register(
@@ -30,52 +37,31 @@ class AuthNotifier extends StateNotifier<FormAuthState> {
         email: email,
         password: password,
       );
-      print(response.user?.email);
+      return response.user != null;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
+      return false;
     } finally {
       state = state.copyWith(isRegisterLoading: false);
     }
   }
 
-  // Future<void> signInWithGoogle() async {
-  //   state = state.copyWith(isGoogleLoading: true);
-  //   try {
-  //     await authRepository.signInWithGoogle();
-  //     print("Google Sign In Success");
-  //   } catch (e) {
-  //     print(e);
-  //   } finally {
-  //     state = state.copyWith(isGoogleLoading: false);
-  //   }
-  // }
-
   Future<void> logout() async {
     await authRepository.logout();
   }
 
-  // Future<void> login(String email, String password) async {
-  //   state = const AsyncLoading();
-  //   state = await AsyncValue.guard(() async {
-  //     final response = await authRepository.login(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     print(response.user?.email);
-  //   });
-  // }
+  Future<void> signInWithGoogle() async {
+    state = state.copyWith(isGoogleLoading: true);
+    try {
+      await authRepository.signInWithGoogle();
+      print("Google Sign In Success");
+    } catch (e) {
+      print("Google Sign In Failed: $e");
+    } finally {
+      state = state.copyWith(isGoogleLoading: false);
+    }
+  }
 
-  // Future<void> register(String username, String email, String password) async {
-  //   state = const AsyncLoading();
-  //   state = await AsyncValue.guard(() async {
-  //     final response = await authRepository.register(
-  //       username: username,
-  //       email: email,
-  //       password: password,
-  //     );
-  //     print(response.user?.email);
-  //   });
-  // }
 
   // Future<void> signInWithGoogle() async {
   //   state = const AsyncLoading();

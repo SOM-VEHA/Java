@@ -25,19 +25,25 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     Future<void> registerAccount({
       required username,
       required email,
-      required password
-    })async{
-      await ref.read(authNotifierProvider.notifier).register(
-        formController.usernameController.text.trim(),
-        formController.emailController.text.trim(),
-        formController.passwordController.text,
-      );
-      if(authState.isRegisterLoading==false){
-        Navigator.pop(context);
+      required password,
+    }) async {
+      final success = await ref.read(authNotifierProvider.notifier).register(username, email, password);
+      if (!mounted){
+        return;
       }else{
-        print('object');
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Account created successfully")),
+          );
+          Navigator.pop(context);
+        } else {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("Register failed")));
+        }
       }
     }
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -109,18 +115,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     const SizedBox(height: 30),
                     CustomButton(
                       text: AppStrings.registerText,
-                      isLoading: authNotifier.isLoading,
+                      isLoading: authNotifier.isRegisterLoading,
                       onPressed: () async {
-                        final username=formController.usernameController.text.trim();
-                        final email=formController.emailController.text.trim();
+                        final username = formController.usernameController.text.trim();
+                        final email = formController.emailController.text.trim();
                         final password = formController.passwordController.text.trim();
                         final conFirmPassword = formController.confirmPasswordController.text.trim();
                         final validation = formController.signupFormKey.currentState!.validate();
-                        if (validation){
+                        if (validation) {
                           if (password != conFirmPassword) {
                             print('object');
                           } else {
-                            await registerAccount(username: username, email: email, password: password);
+                            await registerAccount(
+                              username: username,
+                              email: email,
+                              password: password,
+                            );
                           }
                         }
                       },

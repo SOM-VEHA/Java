@@ -3,11 +3,13 @@ import 'package:e_learning/core/constants/app_strings.dart';
 import 'package:e_learning/core/validator/Validators.dart';
 import 'package:e_learning/provider/AuthProvider.dart';
 import 'package:e_learning/screens/auth/RegisterScreen.dart';
+import 'package:e_learning/screens/navigation/navigation_screen.dart';
 import 'package:e_learning/widget/AppPasswordField.dart';
 import 'package:e_learning/widget/AppTextField.dart';
 import 'package:e_learning/widget/CustomButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
@@ -18,24 +20,35 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    print("LOGIN BUILD");
     final formController = ref.watch(loginFormProvider);
     final authState = ref.watch(authStateProvider);
     final authNotifier = ref.watch(authNotifierProvider);
     Future<void> signInWithGoogle() async {
-      // await ref.read(authNotifierProvider.notifier).signInWithGoogle();
+      await ref.read(authNotifierProvider.notifier).signInWithGoogle();
     }
+
     Future<void> loginAccount({required email, required password}) async {
-      await ref.read(authNotifierProvider.notifier).login(email, password);
-      if(authState.isLoading==false){
-        print('object');
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => Navigation()),
-        // );
-      }else{
-        print('object1');
+      final success = await ref
+          .read(authNotifierProvider.notifier)
+          .login(email, password);
+      if (!mounted) return;
+      if (success) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Login Success")));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => Navigation()),
+        );
+      } else {
+        print("Login Failed");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email or password incorrect")),
+        );
       }
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -120,18 +133,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       },
                     ),
                     SizedBox(height: 20),
-                    // OutlinedButton.icon(
-                    //   onPressed: () async {
-                    //     await ref
-                    //         .read(authNotifierProvider.notifier)
-                    //         .signInWithGoogle();
-                    //   },
-                    //   icon: const Icon(Icons.g_mobiledata),
-                    //   label: authState.isGoogleLoading
-                    //       ? const CircularProgressIndicator()
-                    //       : const Text("Sign in with Google"),
-                    // ),
 
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        await ref
+                            .read(authNotifierProvider.notifier)
+                            .signInWithGoogle();
+                      },
+                      icon: const Icon(Icons.g_mobiledata),
+                      label: authState.isGoogleLoading
+                          ? const CircularProgressIndicator()
+                          : const Text("Sign in with Google"),
+                    ),
                     Row(
                       children: [
                         Expanded(

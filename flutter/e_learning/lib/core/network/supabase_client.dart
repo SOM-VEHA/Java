@@ -2,50 +2,68 @@ import 'package:e_learning/core/exception/server_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../Supabase.dart';
-
 class SupabaseService {
+
   final SupabaseClient client;
+
   SupabaseService(this.client);
 
-  Future<void> signInWithGoogle() async {
-    try {
-      print("Step 1");
+  static String url = 'https://ppfwrhhfgfprnqlgdcre.supabase.co';
 
-      final googleSignIn = GoogleSignIn(
-        // serverClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
-        serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
+  static String anonKey = 'sb_publishable_NObOfc_mtZUejH0-ffPw1A_CTkOB-b9';
 
-      );
+  final supabase = Supabase.instance.client;
 
-      print("Step 2");
-
-      final googleUser = await googleSignIn.signIn();
-
-      print("User: $googleUser");
-
-      if (googleUser == null) {
-        print("User cancelled");
-        return;
-      }
-
-      final googleAuth = await googleUser.authentication;
-
-      print("ID Token: ${googleAuth.idToken}");
-      print("Access Token: ${googleAuth.accessToken}");
-
-      await client.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
-        idToken: googleAuth.idToken!,
-        accessToken: googleAuth.accessToken,
-      );
-
-      print("Supabase login success");
-    } catch (e, st) {
-      print(e);
-      print(st);
+  Future<AuthResponse> signInWithGoogle() async {
+    final googleSignIn = GoogleSignIn(
+      serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
+    );
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      throw Exception("User cancelled");
     }
+    final googleAuth = await googleUser.authentication;
+    return await client.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: googleAuth.idToken!,
+      accessToken: googleAuth.accessToken,
+    );
+    // try {
+    //   print("Step 1");
+    //
+    //   final googleSignIn = GoogleSignIn(
+    //     // serverClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+    //     serverClientId:
+    //         "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
+    //   );
+    //
+    //   print("Step 2");
+    //
+    //   final googleUser = await googleSignIn.signIn();
+    //
+    //   print("User: $googleUser");
+    //
+    //   if (googleUser == null) {
+    //     print("User cancelled");
+    //     return;
+    //   }
+    //
+    //   final googleAuth = await googleUser.authentication;
+    //
+    //   print("ID Token: ${googleAuth.idToken}");
+    //   print("Access Token: ${googleAuth.accessToken}");
+    //
+    //   await client.auth.signInWithIdToken(
+    //     provider: OAuthProvider.google,
+    //     idToken: googleAuth.idToken!,
+    //     accessToken: googleAuth.accessToken,
+    //   );
+    //
+    //   print("Supabase login success");
+    // } catch (e, st) {
+    //   print(e);
+    //   print(st);
+    // }
   }
   // Future<void> signInWithGoogle() async {
   //   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -148,5 +166,5 @@ class SupabaseService {
 }
 
 final supabaseServiceProvider = Provider<SupabaseService>((ref) {
-  return SupabaseService(supabase);
+  return SupabaseService(Supabase.instance.client);
 });

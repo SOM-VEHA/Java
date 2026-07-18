@@ -1,4 +1,5 @@
 import 'package:e_learning/core/Supabase.dart';
+import 'package:e_learning/core/network/supabase_client.dart';
 import 'package:e_learning/screens/auth/LoginScreen.dart';
 import 'package:e_learning/screens/auth/RegisterScreen.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: Supabase_test.url,
-    anonKey: Supabase_test.anonKey,
+    url: SupabaseService.url,
+    anonKey: SupabaseService.anonKey,
   );
 
   runApp(
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home:Searchscreen(),
+      home:LoginScreen(),
       // home: Navigation(),
     );
   }
