@@ -1,4 +1,3 @@
-import 'package:e_learning/controller/FormController/Auth/LoginFormController.dart';
 import 'package:e_learning/controller/FormController/Auth/RegisterFormController.dart';
 import 'package:e_learning/core/constants/app_strings.dart';
 import 'package:e_learning/core/validator/Validators.dart';
@@ -20,10 +19,25 @@ class RegisterScreen extends ConsumerStatefulWidget {
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
-    final formControllerLogin = ref.watch(loginFormProvider);
     final formController = ref.watch(registerFormProvider);
     final authState = ref.watch(authStateProvider);
     final authNotifier = ref.watch(authNotifierProvider);
+    Future<void> registerAccount({
+      required username,
+      required email,
+      required password
+    })async{
+      await ref.read(authNotifierProvider.notifier).register(
+        formController.usernameController.text.trim(),
+        formController.emailController.text.trim(),
+        formController.passwordController.text,
+      );
+      if(authState.isRegisterLoading==false){
+        Navigator.pop(context);
+      }else{
+        print('object');
+      }
+    }
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -97,28 +111,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       text: AppStrings.registerText,
                       isLoading: authNotifier.isLoading,
                       onPressed: () async {
-                        final password = formController.passwordController.text
-                            .trim();
-                        final conFirmPassword = formController
-                            .confirmPasswordController
-                            .text
-                            .trim();
-                        final validation = formController
-                            .signupFormKey
-                            .currentState!
-                            .validate();
-                        if (validation) {
+                        final username=formController.usernameController.text.trim();
+                        final email=formController.emailController.text.trim();
+                        final password = formController.passwordController.text.trim();
+                        final conFirmPassword = formController.confirmPasswordController.text.trim();
+                        final validation = formController.signupFormKey.currentState!.validate();
+                        if (validation){
                           if (password != conFirmPassword) {
                             print('object');
                           } else {
-                            await ref
-                                .read(authNotifierProvider.notifier)
-                                .register(
-                                  formController.usernameController.text.trim(),
-                                  formController.emailController.text.trim(),
-                                  formController.passwordController.text,
-                                );
-                            Navigator.pop(context);
+                            await registerAccount(username: username, email: email, password: password);
                           }
                         }
                       },

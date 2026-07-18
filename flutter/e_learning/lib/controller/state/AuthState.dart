@@ -3,9 +3,6 @@ class FormAuthState {
   final bool isLoading;
   final bool rememberMe;
   final bool obscurePassword;
-
-
-
   final bool isRegisterLoading;
   final bool registerObscurePassword;
   final bool isGoogleLoading;
@@ -18,7 +15,6 @@ class FormAuthState {
     this.isRegisterLoading = false,
     this.isGoogleLoading = false,
   });
-
   FormAuthState copyWith({
     bool? isLoggedIn,
     bool? isLoading,

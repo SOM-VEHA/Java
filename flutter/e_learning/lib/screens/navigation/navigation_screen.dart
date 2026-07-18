@@ -5,9 +5,7 @@ import 'package:e_learning/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/Course.dart';
-import '../../widget/Banner.dart';
-import '../../widget/Category.dart';
-import '../../widget/Course.dart';
+
 
 class Navigation extends StatefulWidget {
   Navigation({super.key});

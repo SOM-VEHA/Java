@@ -10,28 +10,66 @@ class SupabaseService {
   SupabaseService(this.client);
 
   Future<void> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      serverClientId: '751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com',
-    );
+    try {
+      print("Step 1");
 
-    final googleUser = await googleSignIn.signIn();
+      final googleSignIn = GoogleSignIn(
+        // serverClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+        serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
 
-    if (googleUser == null) {
-      return;
+      );
+
+      print("Step 2");
+
+      final googleUser = await googleSignIn.signIn();
+
+      print("User: $googleUser");
+
+      if (googleUser == null) {
+        print("User cancelled");
+        return;
+      }
+
+      final googleAuth = await googleUser.authentication;
+
+      print("ID Token: ${googleAuth.idToken}");
+      print("Access Token: ${googleAuth.accessToken}");
+
+      await client.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: googleAuth.idToken!,
+        accessToken: googleAuth.accessToken,
+      );
+
+      print("Supabase login success");
+    } catch (e, st) {
+      print(e);
+      print(st);
     }
-
-    final googleAuth = await googleUser.authentication;
-    final idToken = googleAuth.idToken;
-    final accessToken = googleAuth.accessToken;
-    if (idToken == null) {
-      throw Exception("Google ID Token is null");
-    }
-    await client.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
   }
+  // Future<void> signInWithGoogle() async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
+  //   );
+  //
+  //   final googleUser = await googleSignIn.signIn();
+  //
+  //   if (googleUser == null) {
+  //     return;
+  //   }
+  //
+  //   final googleAuth = await googleUser.authentication;
+  //   final idToken = googleAuth.idToken;
+  //   final accessToken = googleAuth.accessToken;
+  //   if (idToken == null) {
+  //     throw Exception("Google ID Token is null");
+  //   }
+  //   await client.auth.signInWithIdToken(
+  //     provider: OAuthProvider.google,
+  //     idToken: idToken,
+  //     accessToken: accessToken,
+  //   );
+  // }
 
   Future<List<Map<String, dynamic>>> select(
     String table, {

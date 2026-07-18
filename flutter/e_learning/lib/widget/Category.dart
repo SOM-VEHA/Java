@@ -1,22 +1,9 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-//
-//
-// class Banner extends StatelessWidget {
-//   const Banner({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold();
-//   }
-// }
-
 import 'package:e_learning/provider/CategoryProvider.dart';
 import 'package:e_learning/screens/course_by_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../provider/BannerProvider.dart';
+
 
 class CategoryPage extends ConsumerWidget {
   const CategoryPage({super.key});
@@ -92,8 +79,8 @@ class CategoryPage extends ConsumerWidget {
                             color: Colors.blue,
                             child: Column(
                               children: [
-                                Text(banner.title ?? "No title"),
-                                Text(banner.description ?? "No title"),
+                                Text(banner.title.toString()),
+                                Text(banner.description.toString()),
                               ],
                             ),
                           ),

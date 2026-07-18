@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'OnboardingScreen.dart';
-
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 

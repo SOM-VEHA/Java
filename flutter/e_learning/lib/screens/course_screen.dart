@@ -1,5 +1,4 @@
 import 'package:e_learning/screens/CourseDetailScreen.dart';
-import 'package:e_learning/screens/course_by_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

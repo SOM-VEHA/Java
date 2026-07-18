@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RegisterFormController {
+
   final signupFormKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
@@ -21,7 +22,9 @@ class RegisterFormController {
     passwordController.dispose();
     confirmPasswordController.dispose();
   }
+
 }
+
 final registerFormProvider = Provider.autoDispose<RegisterFormController>((ref) {
   final form = RegisterFormController();
   ref.onDispose(form.dispose);

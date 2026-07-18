@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:e_learning/model/Favorite.dart';
 import 'package:e_learning/repository/FavoriteRepository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/AuthProvider.dart';
 import '../repository/impl/FavoriteRepositoryImpl.dart';
 class FavoriteController extends AsyncNotifier<List<Favorite>> {
   FavoriteRepository get repository => ref.read(favoriteRepositoryProvider);

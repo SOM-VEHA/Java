@@ -1,6 +1,5 @@
 import 'package:e_learning/controller/state/AuthState.dart';
 import 'package:e_learning/repository/AuthRepository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 class AuthNotifier extends StateNotifier<FormAuthState> {
@@ -39,17 +38,17 @@ class AuthNotifier extends StateNotifier<FormAuthState> {
     }
   }
 
-  Future<void> signInWithGoogle() async {
-    state = state.copyWith(isGoogleLoading: true);
-    try {
-      await authRepository.signInWithGoogle();
-      print("Google Sign In Success");
-    } catch (e) {
-      print(e);
-    } finally {
-      state = state.copyWith(isGoogleLoading: false);
-    }
-  }
+  // Future<void> signInWithGoogle() async {
+  //   state = state.copyWith(isGoogleLoading: true);
+  //   try {
+  //     await authRepository.signInWithGoogle();
+  //     print("Google Sign In Success");
+  //   } catch (e) {
+  //     print(e);
+  //   } finally {
+  //     state = state.copyWith(isGoogleLoading: false);
+  //   }
+  // }
 
   Future<void> logout() async {
     await authRepository.logout();

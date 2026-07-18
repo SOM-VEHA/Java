@@ -1,9 +1,6 @@
-import 'package:e_learning/screens/youtube.dart';
 import 'package:e_learning/widget/LessonScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'course_detail_screen.dart';
-
 class CourseDetailScreen extends StatelessWidget {
   CourseDetailScreen({Key? key}) : super(key: key);
   final Course course = Course(

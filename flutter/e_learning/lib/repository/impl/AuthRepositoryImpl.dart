@@ -36,10 +36,10 @@ class AuthRepositoryImpl implements AuthRepository {
     return response;
   }
 
-  @override
-  Future<void> signInWithGoogle()async {
-    await service.signInWithGoogle();
-  }
+  // @override
+  // Future<void> signInWithGoogle()async {
+  //   await service.signInWithGoogle();
+  // }
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {

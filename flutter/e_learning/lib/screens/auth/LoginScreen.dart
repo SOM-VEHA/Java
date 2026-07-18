@@ -8,9 +8,6 @@ import 'package:e_learning/widget/AppTextField.dart';
 import 'package:e_learning/widget/CustomButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../navigation/navigation_screen.dart';
-
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
@@ -20,23 +17,25 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
-  Future<void> login({required email,required password}) async {
-    await ref.read(authNotifierProvider.notifier).login(email, password,);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => Navigation(),
-      ),
-    );
-  }
-  Future<void>signInWithGoogle()async{
-    await ref.read(authNotifierProvider.notifier).signInWithGoogle();
-  }
-
   Widget build(BuildContext context) {
     final formController = ref.watch(loginFormProvider);
     final authState = ref.watch(authStateProvider);
     final authNotifier = ref.watch(authNotifierProvider);
+    Future<void> signInWithGoogle() async {
+      // await ref.read(authNotifierProvider.notifier).signInWithGoogle();
+    }
+    Future<void> loginAccount({required email, required password}) async {
+      await ref.read(authNotifierProvider.notifier).login(email, password);
+      if(authState.isLoading==false){
+        print('object');
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (_) => Navigation()),
+        // );
+      }else{
+        print('object1');
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -108,28 +107,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       text: "Sign In",
                       isLoading: authNotifier.isLoading,
                       onPressed: () async {
-                        if (formController.loginFormKey.currentState!.validate()) {
-                          final email = formController.emailController.text.trim();
-                          final password = formController.passwordController.text.trim();
-                          login(email: email,password: password);
+                        if (formController.loginFormKey.currentState!
+                            .validate()) {
+                          final email = formController.emailController.text
+                              .trim();
+                          final password = formController
+                              .passwordController
+                              .text
+                              .trim();
+                          loginAccount(email: email, password: password);
                         }
                       },
                     ),
                     SizedBox(height: 20),
-                    OutlinedButton.icon(
-                      onPressed: () async {
-                        await ref
-                            .read(authNotifierProvider.notifier)
-                            .signInWithGoogle();
-                      },
-                      icon: const Icon(Icons.g_mobiledata),
-                      label: authState.isGoogleLoading
-                          ? const CircularProgressIndicator()
-                          : const Text("Sign in with Google"),
-                    ),
-
-
-
+                    // OutlinedButton.icon(
+                    //   onPressed: () async {
+                    //     await ref
+                    //         .read(authNotifierProvider.notifier)
+                    //         .signInWithGoogle();
+                    //   },
+                    //   icon: const Icon(Icons.g_mobiledata),
+                    //   label: authState.isGoogleLoading
+                    //       ? const CircularProgressIndicator()
+                    //       : const Text("Sign in with Google"),
+                    // ),
 
                     Row(
                       children: [

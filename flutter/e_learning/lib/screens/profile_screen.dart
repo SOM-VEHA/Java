@@ -1,12 +1,10 @@
-import 'package:e_learning/screens/login_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../model/Achievement.dart';
-import '../model/UserProfile.dart';
-import '../provider/AuthProvider.dart';
-import '../provider/FavoriteProvider.dart';
+
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});

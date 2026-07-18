@@ -59,8 +59,8 @@ class BannerPage extends ConsumerWidget {
 
               return Card(
                 child: ListTile(
-                  title: Text(banner.title ?? "No title"),
-                  subtitle: Text(banner.image ?? ""),
+                  title: Text(banner.title),
+                  subtitle: Text(banner.image),
                 ),
               );
             },
