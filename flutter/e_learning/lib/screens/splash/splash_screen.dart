@@ -1,3 +1,4 @@
+import 'package:e_learning/screens/splash/OnboardingScreen.dart';
 import 'package:flutter/material.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -164,10 +165,9 @@ class SplashScreen extends StatelessWidget {
                         ),
                         child: InkWell(
                           onTap: (){
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => OnboardingScreen()),
-                            // );
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                            );
                           },
                           child: Container(
                             alignment: Alignment.center,

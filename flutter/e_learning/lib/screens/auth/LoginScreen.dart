@@ -25,7 +25,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final authState = ref.watch(authStateProvider);
     final authNotifier = ref.watch(authNotifierProvider);
     Future<void> signInWithGoogle() async {
-      await ref.read(authNotifierProvider.notifier).signInWithGoogle();
+      final success = await ref
+          .read(authNotifierProvider.notifier)
+          .signInWithGoogle();
     }
 
     Future<void> loginAccount({required email, required password}) async {
@@ -37,9 +39,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Login Success")));
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => Navigation()),
+          (Route<dynamic> route) => false,
         );
       } else {
         print("Login Failed");
@@ -150,7 +153,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Expanded(
                           child: OutlinedButton.icon(
                             onPressed: () async {
-                              await signInWithGoogle();
+                              // await signInWithGoogle();
+                              try {
+                                await ref
+                                    .read(authNotifierProvider.notifier)
+                                    .signInWithGoogle();
+                                if (!mounted) return;
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (_) => const HomeScreen(),
+                                //   ),
+                                // );
+                                print('sucess');
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())),
+                                );
+                              }
                             },
                             icon: const Icon(
                               Icons.g_mobiledata_rounded,

@@ -2,6 +2,7 @@ import 'package:e_learning/controller/state/AuthState.dart';
 import 'package:e_learning/repository/AuthRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthNotifier extends StateNotifier<FormAuthState> {
 
@@ -61,6 +62,7 @@ class AuthNotifier extends StateNotifier<FormAuthState> {
       state = state.copyWith(isGoogleLoading: false);
     }
   }
+
 
 
   // Future<void> signInWithGoogle() async {

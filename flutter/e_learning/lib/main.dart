@@ -2,6 +2,7 @@ import 'package:e_learning/core/Supabase.dart';
 import 'package:e_learning/core/network/supabase_client.dart';
 import 'package:e_learning/screens/auth/LoginScreen.dart';
 import 'package:e_learning/screens/auth/RegisterScreen.dart';
+import 'package:e_learning/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto',
       ),
-      home:LoginScreen(),
+      home:SplashScreen(),
       // home: Navigation(),
     );
   }
