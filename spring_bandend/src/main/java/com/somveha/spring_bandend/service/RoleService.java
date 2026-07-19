@@ -16,5 +16,6 @@ public interface RoleService {
 
     List<RoleResponse> findByName(Map<String, String> params);
 
-    Page<RoleResponse> getAllPagination(Map<String, String> params);
+    Page<RoleResponse> getAll(Map<String, String> params);
+    RoleImportResult importFromXlsx(MultipartFile file);
 }

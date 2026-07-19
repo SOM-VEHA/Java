@@ -10,7 +10,6 @@ public class RoleNormalizer {
         roleRequest.setDescription(NormalizeDescription(roleRequest.getDescription()));
         return roleRequest;
     }
-
     private String NormalizeName(String name) {
         return name.trim();
     }

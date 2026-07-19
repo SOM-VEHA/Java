@@ -25,9 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/role")
 @RequiredArgsConstructor
 public class RoleController {
-    
     private final RoleService roleService;
-
     @PostMapping
     public ResponseEntity<BaseSucess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
         RoleResponse roleResponse = roleService.create(roleRequest);
@@ -55,8 +53,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseSucess<RoleResponse>> update(@PathVariable("id") Long id,
-            @RequestBody RoleRequest roleRequest) {
+    public ResponseEntity<BaseSucess<RoleResponse>> update(@PathVariable("id") Long id, @RequestBody RoleRequest roleRequest) {
         RoleResponse roles = roleService.update(roleRequest, id);
         BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
                 .status(true)
@@ -76,12 +73,10 @@ public class RoleController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete role");
         }
-
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(
-            @RequestParam(required = false) Map<String, String> params) {
+    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params) {
         List<RoleResponse> roles = roleService.findByName(params);
         BaseSucess<List<RoleResponse>> response = BaseSucess.<List<RoleResponse>>builder()
                 .status(true)
@@ -94,14 +89,11 @@ public class RoleController {
     }
 
     @GetMapping
-    public ResponseEntity<?> pagination1(@RequestParam(required = false) Map<String, String> params) {
-        Page<RoleResponse> allPagination = roleService.getAllPagination(params);
+    public ResponseEntity<?> getAll(@RequestParam(required = false) Map<String, String> params) {
+        Page<RoleResponse> allPagination = roleService.getAll(params);
         PageDTO pageDTO = new PageDTO(allPagination);
         BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
-                .status(true)
-                .code(HttpStatus.OK.value())
-                .message("Success")
-                .timestamp(LocalDateTime.now().toString())
+                .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now().toString())
                 .pagination(pageDTO.getPagination())
                 .data(null)
                 .build();
