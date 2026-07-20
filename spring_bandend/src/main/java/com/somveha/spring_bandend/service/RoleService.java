@@ -10,12 +10,12 @@ public interface RoleService {
 
     RoleResponse create(RoleRequest roleRequest);
 
-    RoleResponse update(RoleRequest roleRequest, Long Id);
+    RoleResponse update(RoleRequest roleRequest, Long id);
 
-    void delete(Long Id);
+    void delete(Long id);
 
     List<RoleResponse> findByName(Map<String, String> params);
 
     Page<RoleResponse> getAll(Map<String, String> params);
-    RoleImportResult importFromXlsx(MultipartFile file);
+//    RoleImportResult importFromXlsx(MultipartFile file);
 }

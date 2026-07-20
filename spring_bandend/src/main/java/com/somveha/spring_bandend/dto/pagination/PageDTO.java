@@ -9,6 +9,7 @@ public class PageDTO {
     private PaginationPage pagination;
     private List<?> data;
     public PageDTO(Page<?> page) {
+        this.data = page.getContent();
         int pageNumber;
         int pageSize;
         try {
@@ -28,7 +29,6 @@ public class PageDTO {
                 .totalElements(page.getTotalElements())
                 .numberOfElements(page.getNumberOfElements())
                 .build();
-        this.data = page.getContent();
     }
 
 }

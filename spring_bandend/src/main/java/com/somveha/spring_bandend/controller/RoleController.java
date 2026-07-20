@@ -28,7 +28,9 @@ public class RoleController {
     private final RoleService roleService;
     @PostMapping
     public ResponseEntity<BaseSucess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
+        ///call object
         RoleResponse roleResponse = roleService.create(roleRequest);
+        /// class  BaseSucess
         BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
@@ -41,7 +43,9 @@ public class RoleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseSucess<RoleResponse>> getById(@PathVariable("id") Long id) {
+        ///call object
         RoleResponse roleResponse = roleService.getById(id);
+        /// class  BaseSucess
         BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
@@ -54,7 +58,9 @@ public class RoleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseSucess<RoleResponse>> update(@PathVariable("id") Long id, @RequestBody RoleRequest roleRequest) {
+        ///call object
         RoleResponse roles = roleService.update(roleRequest, id);
+        /// class  BaseSucess
         BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
@@ -90,13 +96,19 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<?> getAll(@RequestParam(required = false) Map<String, String> params) {
+        ///call page
         Page<RoleResponse> allPagination = roleService.getAll(params);
+        ///call Page DTO
         PageDTO pageDTO = new PageDTO(allPagination);
+        ///call list RoleResponse
+        List<RoleResponse> data = (List<RoleResponse>) pageDTO.getData();
+        ///call class BasePagination
         BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
                 .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now().toString())
                 .pagination(pageDTO.getPagination())
-                .data(null)
+                .data(data)
                 .build();
+        /// to response
         return ResponseEntity.ok(response);
     }
 }

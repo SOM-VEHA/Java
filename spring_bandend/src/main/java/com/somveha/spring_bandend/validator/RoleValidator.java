@@ -1,9 +1,8 @@
 package com.somveha.spring_bandend.validator;
-import lombok.RequiredArgsConstructor;
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.repository.RoleRepository;
-@RequiredArgsConstructor
-
+import org.springframework.stereotype.Component;
+@Component
 public class RoleValidator {
     private final RoleRepository roleRepository;
 
