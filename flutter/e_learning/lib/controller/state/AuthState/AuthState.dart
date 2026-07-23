@@ -9,11 +9,11 @@ class FormAuthState {
   const FormAuthState({
     this.isLoggedIn = false,
     this.isLoading = false,
+    this.isRegisterLoading = false,
+    this.isGoogleLoading = false,
     this.obscurePassword = true,
     this.registerObscurePassword=true,
     this.rememberMe = true,
-    this.isRegisterLoading = false,
-    this.isGoogleLoading = false,
   });
   FormAuthState copyWith({
     bool? isLoggedIn,

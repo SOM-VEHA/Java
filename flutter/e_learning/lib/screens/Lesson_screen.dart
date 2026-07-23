@@ -1,21 +1,28 @@
+import 'package:e_learning/provider/LessonProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../screens/lesson_detail_screen.dart';
 
-class LessonScreen extends StatelessWidget {
-  const LessonScreen({super.key});
-
+class LessonScreen extends ConsumerWidget {
+  final String courseId;
+  const LessonScreen({
+    super.key,
+    required this.courseId,
+  });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(lessonListProvider);
     return SliverPadding(
       padding: EdgeInsetsGeometry.all(10),
       sliver: SliverList.builder(
-        itemCount: 10,
+        itemCount: state.lessons.length,
         itemBuilder: (context, index) {
+          final lesson=state.lessons[index];
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>LessonDetail())),
+              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>LessonDetailScreen(id: lesson.id,))),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -38,7 +45,7 @@ class LessonScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Lesson 1",
+                            "Lesson : ${lesson.lessonOrder.toString()}",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -55,7 +62,7 @@ class LessonScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Flutter Basics",
+                        lesson.title.toString(),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -63,7 +70,19 @@ class LessonScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Start your Flutter journey with simple examples.tart your Flutter journey with simple examplestart your Flutter journey with simple examples",
+                        lesson.description.toString(),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          height: 1.5,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        lesson.duration.toString(),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
