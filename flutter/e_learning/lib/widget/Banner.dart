@@ -12,168 +12,11 @@
 // }
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_learning/screens/CourseDetailScreen.dart';
+import 'package:e_learning/screens/Course_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/BannerProvider.dart';
-
-class BannerPage extends ConsumerWidget {
-  const BannerPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final banners = ref.watch(bannerProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Banner Test"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              ref.read(bannerProvider.notifier).reload();
-            },
-          ),
-        ],
-      ),
-
-      body: banners.when(
-        loading: () {
-          return const Center(child: CircularProgressIndicator());
-        },
-
-        error: (error, stack) {
-          return Center(child: Text("Error: $error"));
-        },
-
-        data: (list) {
-          if (list.isEmpty) {
-            return const Center(child: Text("No banner found"));
-          }
-
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              final banner = list[index];
-
-              return Card(
-                child: ListTile(
-                  title: Text(banner.title),
-                  subtitle: Text(banner.image),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class SlideAnimationPage extends StatelessWidget {
-  SlideAnimationPage({super.key});
-
-  final List<String> courses = [
-    "Flutter Basics",
-    "Advanced Flutter",
-    "Laravel API",
-    "React JS",
-    "Python for Beginners",
-    "UI/UX Design",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Slide Animation")),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          return TweenAnimationBuilder<Offset>(
-            tween: Tween(begin: const Offset(1, 0), end: Offset.zero),
-            duration: Duration(milliseconds: 400 + (index * 100)),
-            curve: Curves.easeOut,
-            builder: (context, offset, child) {
-              return Transform.translate(
-                offset: Offset(offset.dx * 300, 0),
-                child: child,
-              );
-            },
-            child: Card(
-              margin: const EdgeInsets.only(bottom: 12),
-              elevation: 4,
-              child: ListTile(
-                leading: const CircleAvatar(child: Icon(Icons.play_lesson)),
-                title: Text(courses[index]),
-                subtitle: const Text("Free Course"),
-                trailing: const Icon(Icons.arrow_forward_ios),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class SlideDemo extends StatefulWidget {
-  const SlideDemo({super.key});
-
-  @override
-  State<SlideDemo> createState() => _SlideDemoState();
-}
-
-class _SlideDemoState extends State<SlideDemo> {
-  bool show = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() {
-        show = true;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Slide Animation")),
-      body: Center(
-        child: AnimatedSlide(
-          offset: show ? Offset.zero : const Offset(1.5, 0),
-          duration: const Duration(milliseconds: 600),
-          curve: Curves.easeOut,
-          child: Card(
-            elevation: 5,
-            child: Container(
-              width: 300,
-              padding: const EdgeInsets.all(20),
-              child: const Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.play_circle_fill, size: 60, color: Colors.blue),
-                  SizedBox(height: 12),
-                  Text(
-                    "Flutter Beginner",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text("Free Course"),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class HomeSlider extends StatefulWidget {
   const HomeSlider({super.key});
 
@@ -406,6 +249,7 @@ class _HomeSliderState extends State<HomeSlider> {
     );
   }
 }
+
 class BannerScreen extends ConsumerWidget {
   const BannerScreen({super.key});
 
@@ -517,7 +361,7 @@ class BannerScreen extends ConsumerWidget {
                           ),
                           elevation: 0,
                         ),
-                        onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseDetailScreen())),
+                        onPressed: (){},
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

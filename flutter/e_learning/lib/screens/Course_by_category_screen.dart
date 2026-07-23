@@ -3,13 +3,18 @@ import 'package:e_learning/widget/CourseCard.dart';
 import 'package:e_learning/widget/CourseItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-class CourseByCategoryScreen extends ConsumerWidget {
-  const CourseByCategoryScreen({Key? key}) : super(key: key);
+class CourseByCategoryScreen extends ConsumerStatefulWidget {
+  final String categoryId;
+  const CourseByCategoryScreen({super.key, required this.categoryId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final courses = ref.watch(courseProvider);
+  ConsumerState<CourseByCategoryScreen> createState() => _CourseByCategoryScreenState();
+}
+
+class _CourseByCategoryScreenState extends ConsumerState<CourseByCategoryScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final coursesAsync = ref.watch(coursesByCategoryProvider(widget.categoryId));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -40,7 +45,7 @@ class CourseByCategoryScreen extends ConsumerWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          courses.when(
+          coursesAsync.when(
             loading: () => const SliverToBoxAdapter(
               child: Center(child: CircularProgressIndicator()),
             ),

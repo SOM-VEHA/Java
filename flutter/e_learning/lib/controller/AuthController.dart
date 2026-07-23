@@ -1,4 +1,4 @@
-import 'package:e_learning/controller/state/AuthState.dart';
+import 'package:e_learning/controller/state/AuthState/AuthState.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthController extends Notifier<FormAuthState> {

@@ -1,5 +1,5 @@
 import 'package:e_learning/provider/CategoryProvider.dart';
-import 'package:e_learning/screens/course_by_category_screen.dart';
+import 'package:e_learning/screens/Course_by_category_screen.dart';
 import 'package:e_learning/widget/CategoryItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +33,7 @@ class CategoryScreen extends ConsumerWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const CourseByCategoryScreen(),
+                    builder: (_) =>  CourseByCategoryScreen(categoryId: data.id),
                   ),
                 );
               },

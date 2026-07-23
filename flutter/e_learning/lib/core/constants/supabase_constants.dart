@@ -4,4 +4,5 @@ class BaseConstants {
   static const favoriteTable="favorite";
   static const categoryTable="category";
   static const bannerTable="banner";
+  static const lessonTable="lesson";
 }

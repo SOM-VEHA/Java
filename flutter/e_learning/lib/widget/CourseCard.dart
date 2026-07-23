@@ -48,11 +48,9 @@ class CourseCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             /// Image
             Stack(
               children: [
-
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(18),
@@ -101,8 +99,7 @@ class CourseCard extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        isFavorite ? Icons.favorite
-: Icons.favorite_border,
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: Colors.red,
                         size: 22,
                       ),
@@ -117,7 +114,6 @@ class CourseCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Text(
                     title,
                     maxLines: 2,
@@ -134,47 +130,31 @@ class CourseCard extends StatelessWidget {
                     description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      height: 1.4,
-                    ),
+                    style: TextStyle(color: Colors.grey.shade600, height: 1.4),
                   ),
 
                   const SizedBox(height: 14),
 
                   Row(
                     children: [
-
-                      const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 18,
-                      ),
+                      const Icon(Icons.star, color: Colors.amber, size: 18),
 
                       const SizedBox(width: 4),
 
                       Text(
                         rating.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
 
                       const SizedBox(width: 12),
 
-                      Icon(
-                        Icons.people,
-                        size: 18,
-                        color: Colors.grey.shade600,
-                      ),
+                      Icon(Icons.people, size: 18, color: Colors.grey.shade600),
 
                       const SizedBox(width: 4),
 
                       Text(
                         "$students Students",
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                        ),
+                        style: TextStyle(color: Colors.grey.shade600),
                       ),
 
                       const Spacer(),

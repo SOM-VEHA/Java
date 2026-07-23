@@ -1,6 +1,6 @@
 import 'package:e_learning/model/Course.dart';
 import 'package:e_learning/provider/FavoriteProvider.dart';
-import 'package:e_learning/screens/CourseDetailScreen.dart';
+import 'package:e_learning/screens/Course_detail_screen.dart' hide Course;
 import 'package:e_learning/widget/CourseCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +11,9 @@ class CourseItem extends ConsumerWidget {
   const CourseItem({super.key, required this.course});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteList = ref.watch(favoriteControllerProvider).value ?? [];
+    final favoriteState = ref.watch(favoriteControllerProvider);
     final favoriteController = ref.read(favoriteControllerProvider.notifier);
-    final isFavorite = favoriteList.any(
-      (favorite) => favorite.course_id == course.id,
-    );
-
+    final isFavorite = favoriteState.value?.any((favorite) => favorite.course_id == course.id,) ?? false;
     return CourseCard(
       image: course.image_url,
       title: course.title,
@@ -26,9 +23,15 @@ class CourseItem extends ConsumerWidget {
       price: "\$29.99",
       isRecommended: true,
       isFavorite: isFavorite,
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseDetailScreen())),
-      onFavorite: () {
-        favoriteController.toggleFavorite(course.id);
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CourseDetailScreen(id: course.id),
+        ),
+      ),
+      onFavorite: () async {
+        print("CLICK FAVORITE ${course.id}");
+        await favoriteController.toggleFavorite(course.id);
       },
     );
   }

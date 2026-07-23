@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/CourseProvider.dart';
-import '../screens/CourseDetailScreen.dart';
+import '../screens/Course_detail_screen.dart';
 
 class CourseScreens extends ConsumerWidget {
   const CourseScreens({super.key});
@@ -47,12 +47,12 @@ class CourseScreens extends ConsumerWidget {
             final course = courseList[index];
             return InkWell(
               onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>  CourseDetailScreen(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) =>  CourseDetailScreen(),
+                //   ),
+                // );
               },
               child: Container(
                 margin: const EdgeInsets.all(10),

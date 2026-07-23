@@ -2,16 +2,20 @@ import 'package:e_learning/widget/CourseItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../provider/FavoriteProvider.dart';
-
-class FavoriteScreen extends ConsumerWidget {
+class FavoriteScreen extends ConsumerStatefulWidget {
   const FavoriteScreen({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
+  @override
+  Widget build(BuildContext context) {
     final favoriteProvider = ref.watch(favoriteControllerProvider);
-    final favorites = favoriteProvider.value ?? [];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
+        // controller: _scrollController,
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -32,58 +36,35 @@ class FavoriteScreen extends ConsumerWidget {
             ),
             actions: [Icon(Icons.notifications)],
           ),
-          SliverPadding(
-            padding: const EdgeInsets.all(10),
-            sliver: favorites.isEmpty
-                ? const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(
-                      child: Text(
-                        "No favorite courses",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  )
-                : SliverList.builder(
-                    itemCount: favorites.length,
-                    itemBuilder: (context, index) {
-                      final favorite = favorites[index];
-
-                      return CourseItem(course: favorite.course);
-                    },
+          favoriteProvider.when(
+            loading: () => const SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (e, _) => SliverFillRemaining(
+              child: Center(child: Text(e.toString())),
+            ),
+            data: (favorites) {
+              if (favorites.isEmpty) {
+                return const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: Text("No favorite courses"),
                   ),
+                );
+              }
+              return SliverPadding(
+                padding: const EdgeInsets.all(10),
+                sliver: SliverList.builder(
+                  itemCount: favorites.length,
+                  itemBuilder: (context, index) {
+                    return CourseItem(
+                      course: favorites[index].course,
+                    );
+                  },
+                ),
+              );
+            },
           ),
-          // SliverPadding(
-          //   padding: EdgeInsetsGeometry.all(10),
-          //   sliver:favoriteProvider.when(
-          //     loading: () => SliverFillRemaining(
-          //       child: const Center(child: CircularProgressIndicator()),
-          //     ),
-          //     error: (error, stack) => SliverToBoxAdapter(
-          //       child: Center(child: Text(error.toString())),
-          //     ),
-          //     data: (favorites) {
-          //       if (favorites.isEmpty) {
-          //         return const SliverFillRemaining(
-          //           hasScrollBody: false,
-          //           child: Center(
-          //             child: Text(
-          //               "No favorite courses",
-          //               style: TextStyle(fontSize: 16),
-          //             ),
-          //           ),
-          //         );
-          //       }
-          //       return  SliverList.builder(
-          //         itemCount: favorites.length,
-          //         itemBuilder: (context, index) {
-          //           final course=favorites[index];
-          //           return CourseItem(course: course.course);
-          //         },
-          //       );
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );

@@ -2,7 +2,7 @@ import 'package:e_learning/provider/LessonProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../screens/lesson_detail_screen.dart';
+import 'Lesson_detail_screen.dart';
 
 class LessonScreen extends ConsumerWidget {
   final String courseId;

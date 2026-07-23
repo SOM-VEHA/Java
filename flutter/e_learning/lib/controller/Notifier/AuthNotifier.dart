@@ -1,4 +1,4 @@
-import 'package:e_learning/controller/state/AuthState.dart';
+import 'package:e_learning/controller/state/AuthState/AuthState.dart';
 import 'package:e_learning/repository/AuthRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -62,17 +62,4 @@ class AuthNotifier extends StateNotifier<FormAuthState> {
       state = state.copyWith(isGoogleLoading: false);
     }
   }
-
-
-
-  // Future<void> signInWithGoogle() async {
-  //   state = const AsyncLoading();
-  //   state = await AsyncValue.guard(() => authRepository.signInWithGoogle());
-  //   print("Google Sign In Success");
-  // }
-
-  // Future<void> logout() async {
-  //   state = const AsyncLoading();
-  //   state = await AsyncValue.guard(() => authRepository.logout());
-  // }
 }

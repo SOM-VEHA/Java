@@ -3,21 +3,41 @@ import 'package:e_learning/core/network/supabase_client.dart';
 import 'package:e_learning/model/Favorite.dart';
 import 'package:e_learning/repository/FavoriteRepository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/constants/supabase_constants.dart';
 
 class FavoriteRepositoryImpl extends FavoriteRepository {
   final SupabaseService supabaseService;
   FavoriteRepositoryImpl(this.supabaseService);
+
   @override
-  Future<void> addCourse(String courseId) async {
+  Future<List<Favorite>> findAll({int page = 0, int limit = 0}) async {
+    try {
+      final user = supabaseService.client.auth.currentUser;
+      print("Current user: ${user?.email}");
+      final response = await supabaseService.select(
+        BaseConstants.favoriteTable,
+        columns: "*,course(*)",
+      );
+      print("Favorites: ${response.length}");
+      return response.map((e) => Favorite.fromJson(e)).toList();
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      throw AppException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<Favorite> addCourse(courseId) async {
     final user = supabaseService.client.auth.currentUser;
     if (user == null) {
-      throw Exception("User មិនទាន់ Login");
-    } else {
-      await supabaseService.insert("favorite", {
-        "user_id": user.id,
-        "course_id": courseId,
-      });
+      throw Exception("User not logged in");
     }
+    final response = await supabaseService.insert(BaseConstants.favoriteTable, {
+      "user_id": user.id,
+      "course_id": courseId,
+    }, columns: "*, course(*)");
+    return Favorite.fromJson(response);
   }
 
   @override
@@ -30,25 +50,6 @@ class FavoriteRepositoryImpl extends FavoriteRepository {
       "user_id": user.id,
       "course_id": courseId,
     });
-  }
-
-  @override
-  @override
-  Future<List<Favorite>> findAll() async {
-    try {
-      final user = supabaseService.client.auth.currentUser;
-      print("Current user: ${user?.email}");
-      final response = await supabaseService.select(
-        "favorite",
-        columns: "*,course(*)",
-      );
-      print("Favorites: ${response.length}");
-      return response.map((e) => Favorite.fromJson(e)).toList();
-    } on AppException {
-      rethrow;
-    } catch (e) {
-      throw AppException(message: e.toString());
-    }
   }
 }
 

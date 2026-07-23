@@ -1,7 +1,7 @@
 import 'package:e_learning/controller/Notifier/AuthNotifier.dart';
 import 'package:e_learning/repository/impl/AuthRepositoryImpl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:e_learning/controller/state/AuthState.dart';
+import 'package:e_learning/controller/state/AuthState/AuthState.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../controller/AuthController.dart';

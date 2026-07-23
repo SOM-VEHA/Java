@@ -2,8 +2,8 @@ import 'package:e_learning/core/exception/server_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-class SupabaseService {
 
+class SupabaseService {
   final SupabaseClient client;
 
   SupabaseService(this.client);
@@ -16,7 +16,8 @@ class SupabaseService {
 
   Future<AuthResponse> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn(
-      serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
+      serverClientId:
+          "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
     );
     final googleUser = await googleSignIn.signIn();
     if (googleUser == null) {
@@ -65,42 +66,99 @@ class SupabaseService {
     //   print(st);
     // }
   }
-  // Future<void> signInWithGoogle() async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn(
-  //     serverClientId: "751838681381-2l8l6m8fmsok3r359ccd0dudnh8ubbsa.apps.googleusercontent.com",
-  //   );
-  //
-  //   final googleUser = await googleSignIn.signIn();
-  //
-  //   if (googleUser == null) {
-  //     return;
-  //   }
-  //
-  //   final googleAuth = await googleUser.authentication;
-  //   final idToken = googleAuth.idToken;
-  //   final accessToken = googleAuth.accessToken;
-  //   if (idToken == null) {
-  //     throw Exception("Google ID Token is null");
-  //   }
-  //   await client.auth.signInWithIdToken(
-  //     provider: OAuthProvider.google,
-  //     idToken: idToken,
-  //     accessToken: accessToken,
-  //   );
-  // }
+
+  Future<List<Map<String, dynamic>>> selectByColumnPagination(
+    String table,
+    String column,
+    dynamic value, {
+    int page = 1,
+    int limit = 10,
+  }) async {
+    try {
+      final from = (page - 1) * limit;
+      final to = from + limit - 1;
+
+      final response = await client
+          .from(table)
+          .select()
+          .eq(column, value)
+          .range(from, to);
+      return List<Map<String, dynamic>>.from(response);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    }
+  }
 
   Future<List<Map<String, dynamic>>> select(
     String table, {
     String columns = '*',
+    int? page,
+    int? limit,
   }) async {
     try {
-      final response = await client.from(table).select(columns);
+      final dynamic query = client.from(table).select(columns);
+      dynamic response;
+      if (page != null && limit != null) {
+        final from = (page - 1) * limit;
+        final to = from + limit - 1;
+        response = await query.range(from, to);
+      } else {
+        response = await query;
+      }
       return List<Map<String, dynamic>>.from(response);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  // Future<List<Map<String, dynamic>>> select(
+  //   String table, {
+  //   String columns = '*',
+  //   int page = 1,
+  //   int limit = 10,
+  // }) async {
+  //   try {
+  //
+  //
+  //     final from = (page - 1) * limit;
+  //     final to = from + limit - 1;
+  //     final response = await client.from(table).select(columns).range(from, to);
+  //     return List<Map<String, dynamic>>.from(response);
+  //   } on PostgrestException catch (e) {
+  //     throw ServerException(e.message);
+  //   } catch (e) {
+  //     throw ServerException(e.toString());
+  //   }
+  // }
+
+  Future<List<Map<String, dynamic>>> selectByColumn(
+    String table,
+    String column,
+    dynamic value,
+  ) async {
+    try {
+      final response = await client.from(table).select().eq(column, value);
+      return List<Map<String, dynamic>>.from(response);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> insert(
+    String table,
+    Map<String, dynamic> data, {
+    String? columns,
+  }) async {
+    final response = await client
+        .from(table)
+        .insert(data)
+        .select(columns ?? "*")
+        .single();
+    return Map<String, dynamic>.from(response);
   }
 
   Future<Map<String, dynamic>> selectById(
@@ -120,10 +178,6 @@ class SupabaseService {
     } catch (e) {
       throw ServerException(e.toString());
     }
-  }
-
-  Future<void> insert(String table, Map<String, dynamic> data) async {
-    await client.from(table).insert(data);
   }
 
   Future<void> update(
@@ -162,6 +216,11 @@ class SupabaseService {
 
   Future<void> logout() async {
     await client.auth.signOut();
+  }
+
+  Future<List<Map<String, dynamic>>> search(String table, String keyword,) async {
+    final response = await client.from(table).select().or('title.ilike.%$keyword%,description.ilike.%$keyword%');
+    return List<Map<String, dynamic>>.from(response);
   }
 }
 
