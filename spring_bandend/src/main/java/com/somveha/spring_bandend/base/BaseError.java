@@ -1,19 +1,17 @@
 package com.somveha.spring_bandend.base;
-
-import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.somveha.spring_bandend.base.BaseResponse;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class BaseError<T> {
-    private Boolean status;
-    private Integer code;
-    private String message;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime timestamp;
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+public class BaseError<T> extends  BaseResponse {
+
     private T errors;
 }

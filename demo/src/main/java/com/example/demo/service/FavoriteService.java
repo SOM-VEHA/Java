@@ -1,15 +1,22 @@
 package com.example.demo.service;
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Authentication;
+
 import com.example.demo.dto.request.FavoriteRequest;
 import com.example.demo.dto.response.FavoriteResponse;
+import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.entity.Product;
 
 public interface FavoriteService {
 
-    FavoriteResponse addFavorite(FavoriteRequest favoriteRequest);
+    List<ProductResponse> getFavorites(String email);
 
-    void removeFavorite(FavoriteRequest favoriteRequest);
+    // FavoriteResponse addFavorite(FavoriteRequest favoriteRequest);
 
-    List<Product> getFavorites(Long userId);
+    // void removeFavorite(FavoriteRequest favoriteRequest);
+
+    // List<Product> getFavorites(Long userId);
+
+    // List<ProductResponse> getFavoriteProductsByUserId(Authentication authentication);
 }

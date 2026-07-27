@@ -27,7 +27,6 @@ public class RoleServiceImpl implements RoleService {
     private final RoleMapper roleMapper;
     private final RoleNormalizer roleNormalizer;
     private final RoleValidator roleValidator;
-
     @Override
     public RoleResponse getById(Long id) {
         ///check data have or not
@@ -37,7 +36,6 @@ public class RoleServiceImpl implements RoleService {
         ///return
         return response;
     }
-
     @Override
     public RoleResponse create(RoleRequest roleRequest) {
         ///log data
@@ -55,7 +53,6 @@ public class RoleServiceImpl implements RoleService {
         ///return
         return response;
     }
-
     @Override
     public RoleResponse update(RoleRequest roleRequest, Long id) {
         ///log requesr
@@ -75,14 +72,12 @@ public class RoleServiceImpl implements RoleService {
         ///return
         return response;
     }
-
     @Override
     public void delete(Long id) {
         ///check data have or not
         Role role = roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + id));
         roleRepository.delete(role);
     }
-
     @Override
     public List<RoleResponse> findByName(Map<String, String> params) {
         ///log params
@@ -90,7 +85,6 @@ public class RoleServiceImpl implements RoleService {
         Specification<Role> spec = RoleSpecification.builderSpecification(params);
         return roleRepository.findAll(spec).stream().map(roleMapper::toResponse).toList();
     }
-
     @Override
     public Page<RoleResponse> getAll(Map<String, String> params) {
         ///check log of params

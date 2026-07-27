@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.somveha.spring_bandend.base.BasePagination;
-import com.somveha.spring_bandend.base.BaseSucess;
+import com.somveha.spring_bandend.base.BaseSuccess;
 import com.somveha.spring_bandend.dto.pagination.PageDTO;
 import com.somveha.spring_bandend.dto.request.RoleRequest;
 import com.somveha.spring_bandend.dto.response.RoleResponse;
@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RoleController {
     private final RoleService roleService;
     @PostMapping
-    public ResponseEntity<BaseSucess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
+    public ResponseEntity<BaseSuccess<RoleResponse>> create(@RequestBody RoleRequest roleRequest) {
         ///call object
         RoleResponse roleResponse = roleService.create(roleRequest);
         /// class  BaseSucess
-        BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
+        BaseSuccess<RoleResponse> response = BaseSuccess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
@@ -42,11 +42,11 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BaseSucess<RoleResponse>> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<BaseSuccess<RoleResponse>> getById(@PathVariable("id") Long id) {
         ///call object
         RoleResponse roleResponse = roleService.getById(id);
         /// class  BaseSucess
-        BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
+        BaseSuccess<RoleResponse> response = BaseSuccess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
@@ -57,11 +57,11 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseSucess<RoleResponse>> update(@PathVariable("id") Long id, @RequestBody RoleRequest roleRequest) {
+    public ResponseEntity<BaseSuccess<RoleResponse>> update(@PathVariable("id") Long id, @RequestBody RoleRequest roleRequest) {
         ///call object
         RoleResponse roles = roleService.update(roleRequest, id);
         /// class  BaseSucess
-        BaseSucess<RoleResponse> response = BaseSucess.<RoleResponse>builder()
+        BaseSuccess<RoleResponse> response = BaseSuccess.<RoleResponse>builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
@@ -82,15 +82,17 @@ public class RoleController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseSucess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params) {
+    public ResponseEntity<BaseSuccess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params) {
         List<RoleResponse> roles = roleService.findByName(params);
-        BaseSucess<List<RoleResponse>> response = BaseSucess.<List<RoleResponse>>builder()
-                .status(true)
-                .code(HttpStatus.OK.value())
-                .timestamp(LocalDateTime.now())
-                .message("Success")
-                .data(roles)
-                .build();
+        BaseSuccess<List<RoleResponse>> response =
+                BaseSuccess.<List<RoleResponse>>builder()
+                        .status(true)
+                        .code(HttpStatus.OK.value())
+                        .timestamp(LocalDateTime.now())
+                        .message("Success")
+                        .data(roles)
+                        .build();
+
         return ResponseEntity.ok(response);
     }
 
@@ -104,7 +106,7 @@ public class RoleController {
         List<RoleResponse> data = (List<RoleResponse>) pageDTO.getData();
         ///call class BasePagination
         BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
-                .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now().toString())
+                .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now())
                 .pagination(pageDTO.getPagination())
                 .data(data)
                 .build();

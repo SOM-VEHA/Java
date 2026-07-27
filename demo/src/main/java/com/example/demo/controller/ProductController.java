@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.dto.request.ProductRequest;
 import com.example.demo.dto.response.ApiResponse;
-import com.example.demo.dto.response.ProductResponce;
+import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.service.ProductService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProductResponce>> create(@RequestBody ProductRequest request) {
-        ApiResponse<ProductResponce> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<ProductResponse>> create(@RequestBody ProductRequest request) {
+        ApiResponse<ProductResponse> response = new ApiResponse<>();
         response.setSuccess(true);
         response.setMessage("Product created successfully");
         response.setData(productService.create(request));
@@ -32,8 +32,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ProductResponce>>> getAll() {
-        ApiResponse<List<ProductResponce>> response = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> getAll() {
+        ApiResponse<List<ProductResponse>> response = new ApiResponse<>();
         response.setSuccess(true);
         response.setMessage("Products fetched successfully");
         response.setData(productService.getAll());
@@ -41,8 +41,8 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<ProductResponce>> getById(@PathVariable("id") Long id) {
-        ApiResponse<ProductResponce> productResponse = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<ProductResponse>> getById(@PathVariable("id") Long id) {
+        ApiResponse<ProductResponse> productResponse = new ApiResponse<>();
         productResponse.setSuccess(true);
         productResponse.setMessage("Products fetched successfully");
         productResponse.setData(productService.getByid(id));

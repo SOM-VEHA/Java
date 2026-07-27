@@ -1,5 +1,5 @@
 package com.somveha.spring_bandend.base;
-
+import com.somveha.spring_bandend.base.BaseResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 public class BaseSuccess<T> extends BaseResponse {
-
     private T data;
 }

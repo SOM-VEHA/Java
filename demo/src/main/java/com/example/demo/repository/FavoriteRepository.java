@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.Favorite;
+import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     
-    List<Favorite> findByUserId(Long userId);
+    List<Favorite> findByUser(User user);
 
-    boolean existsByUserIdAndProductId(Long userId, Long productId);
+    boolean existsByUserAndProduct(User user, Product product);
 
-    void deleteByUserIdAndProductId(Long userId, Long productId);
+    void deleteByUserAndProduct(User user, Product product);
 }

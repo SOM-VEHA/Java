@@ -1,4 +1,6 @@
 package com.somveha.spring_bandend.filter;
 
-public class UserFilter {
+import com.somveha.spring_bandend.filter.BaseFilter.BaseFilter;
+
+public class UserFilter extends BaseFilter {
 }

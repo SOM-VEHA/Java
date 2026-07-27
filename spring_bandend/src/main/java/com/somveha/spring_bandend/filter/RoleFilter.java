@@ -1,4 +1,6 @@
 package com.somveha.spring_bandend.filter;
 
-public class RoleFilter {
+import com.somveha.spring_bandend.filter.BaseFilter.BaseFilter;
+
+public class RoleFilter extends BaseFilter {
 }

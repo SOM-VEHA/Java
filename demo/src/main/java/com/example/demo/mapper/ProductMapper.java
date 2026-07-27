@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.example.demo.dto.request.ProductRequest;
-import com.example.demo.dto.response.ProductResponce;
+import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.entity.Product;
 
 @Mapper(componentModel = "spring")
@@ -17,7 +17,7 @@ public interface ProductMapper {
 
     @Mapping(target = "categoryId", source = "category.id")
     @Mapping(target = "subCategoryId", source = "subCategory.id")
-    ProductResponce tResponce(Product product);
+    ProductResponse tResponce(Product product);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "category", ignore = true)
