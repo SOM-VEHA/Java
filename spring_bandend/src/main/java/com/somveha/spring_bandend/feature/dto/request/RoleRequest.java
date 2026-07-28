@@ -1,4 +1,4 @@
-package com.somveha.spring_bandend.dto.request;
+package com.somveha.spring_bandend.feature.dto.request;
 
 import lombok.Data;
 

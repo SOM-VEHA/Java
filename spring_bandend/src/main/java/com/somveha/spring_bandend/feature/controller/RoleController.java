@@ -1,4 +1,4 @@
-package com.somveha.spring_bandend.controller;
+package com.somveha.spring_bandend.feature.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.somveha.spring_bandend.base.BasePagination;
 import com.somveha.spring_bandend.base.BaseSuccess;
 import com.somveha.spring_bandend.dto.pagination.PageDTO;
-import com.somveha.spring_bandend.dto.request.RoleRequest;
-import com.somveha.spring_bandend.dto.response.RoleResponse;
-import com.somveha.spring_bandend.service.RoleService;
+import com.somveha.spring_bandend.feature.dto.filter.RoleFilter;
+import com.somveha.spring_bandend.feature.dto.request.RoleRequest;
+import com.somveha.spring_bandend.feature.dto.response.RoleResponse;
+import com.somveha.spring_bandend.feature.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,36 +82,62 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<BaseSuccess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params) {
-        List<RoleResponse> roles = roleService.findByName(params);
-        BaseSuccess<List<RoleResponse>> response =
-                BaseSuccess.<List<RoleResponse>>builder()
-                        .status(true)
-                        .code(HttpStatus.OK.value())
-                        .timestamp(LocalDateTime.now())
-                        .message("Success")
-                        .data(roles)
-                        .build();
+    // @GetMapping("/search")
+    // public ResponseEntity<BaseSuccess<List<RoleResponse>>> getByname(@RequestParam(required = false) Map<String, String> params) {
+    //     List<RoleResponse> roles = roleService.findByName(params);
+    //     BaseSuccess<List<RoleResponse>> response =
+    //             BaseSuccess.<List<RoleResponse>>builder()
+    //                     .status(true)
+    //                     .code(HttpStatus.OK.value())
+    //                     .timestamp(LocalDateTime.now())
+    //                     .message("Success")
+    //                     .data(roles)
+    //                     .build();
 
-        return ResponseEntity.ok(response);
+    //     return ResponseEntity.ok(response);
+    // }
+
+
+    @GetMapping("all")
+    public ResponseEntity<?> getAllFilterByName(RoleFilter filter){
+        List<RoleResponse> response = roleService.getAllFilter(filter);
+        return  ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(@RequestParam(required = false) Map<String, String> params) {
-        ///call page
-        Page<RoleResponse> allPagination = roleService.getAll(params);
-        ///call Page DTO
+    public ResponseEntity<?> paginationFiler(RoleFilter roleFilter){
+        Page<RoleResponse> allPagination = roleService.getAllPaginationFilter(roleFilter);
         PageDTO pageDTO = new PageDTO(allPagination);
-        ///call list RoleResponse
         List<RoleResponse> data = (List<RoleResponse>) pageDTO.getData();
-        ///call class BasePagination
-        BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
-                .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now())
-                .pagination(pageDTO.getPagination())
-                .data(data)
-                .build();
-        /// to response
-        return ResponseEntity.ok(response);
+        return  ResponseEntity.ok(
+                BasePagination.<RoleResponse>builder()
+                        .status(true)
+                        .code(HttpStatus.OK.value())
+                        .message("Success")
+                        .timestamp(LocalDateTime.now())
+                        .pagination(pageDTO.getPagination())
+                        .data(data)
+                        .build()
+        );
     }
+
+
+
+    // @GetMapping
+    // public ResponseEntity<?> getAll(@RequestParam(required = false) Map<String, String> params) {
+    //     ///call page
+    //     Page<RoleResponse> allPagination = roleService.getAll(params);
+    //     ///call Page DTO
+    //     PageDTO pageDTO = new PageDTO(allPagination);
+    //     ///call list RoleResponse
+    //     List<RoleResponse> data = (List<RoleResponse>) pageDTO.getData();
+    //     ///call class BasePagination
+    //     BasePagination<RoleResponse> response = BasePagination.<RoleResponse>builder()
+    //             .status(true).code(HttpStatus.OK.value()).message("Success").timestamp(LocalDateTime.now())
+    //             .pagination(pageDTO.getPagination())
+    //             .data(data)
+    //             .build();
+    //     /// to response
+    //     return ResponseEntity.ok(response);
+    // }
 }

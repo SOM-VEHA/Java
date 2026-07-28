@@ -1,8 +1,8 @@
-package com.somveha.spring_bandend.normalizer;
+package com.somveha.spring_bandend.feature.normalizer;
 
 import org.springframework.stereotype.Component;
 
-import com.somveha.spring_bandend.dto.request.RoleRequest;
+import com.somveha.spring_bandend.feature.dto.request.RoleRequest;
 @Component
 public class RoleNormalizer {
     public RoleRequest normalize(RoleRequest roleRequest) {

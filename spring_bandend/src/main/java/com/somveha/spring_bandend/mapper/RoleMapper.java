@@ -3,8 +3,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.somveha.spring_bandend.dto.request.RoleRequest;
-import com.somveha.spring_bandend.dto.response.RoleResponse;
+import com.somveha.spring_bandend.feature.dto.request.RoleRequest;
+import com.somveha.spring_bandend.feature.dto.response.RoleResponse;
 import com.somveha.spring_bandend.entity.Role;
 
 @Mapper(componentModel = "spring")

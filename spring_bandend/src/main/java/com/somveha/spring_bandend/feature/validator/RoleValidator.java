@@ -1,6 +1,6 @@
-package com.somveha.spring_bandend.validator;
-import com.somveha.spring_bandend.dto.request.RoleRequest;
-import com.somveha.spring_bandend.repository.RoleRepository;
+package com.somveha.spring_bandend.feature.validator;
+import com.somveha.spring_bandend.feature.dto.request.RoleRequest;
+import com.somveha.spring_bandend.feature.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 @Component
 public class RoleValidator {

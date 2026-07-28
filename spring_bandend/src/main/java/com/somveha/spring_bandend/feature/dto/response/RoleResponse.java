@@ -1,4 +1,4 @@
-package com.somveha.spring_bandend.dto.response;
+package com.somveha.spring_bandend.feature.dto.response;
 
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
